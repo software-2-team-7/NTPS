@@ -1,1 +1,0 @@
-NTPS Project Readme
