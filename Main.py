@@ -821,7 +821,7 @@ class Ui_MainWindow(object):
 
     def retranslateUi(self, MainWindow):
         _translate = QtCore.QCoreApplication.translate
-        MainWindow.setWindowTitle(_translate("MainWindow", "MainWindow"))
+        MainWindow.setWindowTitle(_translate("MainWindow", "Network Traffic Proxy System"))
         self.HV_GroupBox_2.setTitle(_translate("MainWindow", "Content View"))
         self.HV_GroupBox.setTitle(_translate("MainWindow", "Hook View"))
         self.HV_TC_AddHookButton.setText(_translate("MainWindow", "+Hook"))
