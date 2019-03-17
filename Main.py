@@ -176,6 +176,8 @@ class Ui_MainWindow(object):
         item_2 = QtWidgets.QTreeWidgetItem(item_1)
         self.HCV_HCP_TreeView.header().setCascadingSectionResizes(False)
         self.HCV_HCP_TreeView.header().setDefaultSectionSize(167)
+        self.HCV_HCP_TreeView.itemSelectionChanged.connect(lambda: self.showHookInfo(self.HCV_HookProperties_GroupBox))
+
         self.gridLayout_34.addWidget(self.HCV_HCP_TreeView, 0, 0, 1, 2)
         spacerItem4 = QtWidgets.QSpacerItem(40, 20, QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Minimum)
         self.gridLayout_34.addItem(spacerItem4, 2, 0, 1, 1)
@@ -196,6 +198,7 @@ class Ui_MainWindow(object):
         item_0 = QtWidgets.QTreeWidgetItem(self.HCV_HCP_HP_TreeView)
         item_0 = QtWidgets.QTreeWidgetItem(self.HCV_HCP_HP_TreeView)
         self.horizontalLayout_12.addWidget(self.HCV_HCP_HP_TreeView)
+        self.HCV_HookProperties_GroupBox.hide()
         self.gridLayout_34.addWidget(self.HCV_HookProperties_GroupBox, 1, 0, 1, 2)
         self.verticalLayout_2.addWidget(self.HCV_HookCollectionProperties_GroupBox)
         self.gridLayout_13.addWidget(self.GroupBox_HCV, 1, 0, 1, 1)
@@ -785,7 +788,8 @@ class Ui_MainWindow(object):
         Dialog = QtWidgets.QDialog()
         hookDialog = dialogType
         hookDialog.setupUi(Dialog)
-        Dialog.exec()
+        hookname, hookdes, hookpath = hookDialog.getData(Dialog)
+
 
     def setPage(self, stackview, index):
         stackview.setCurrentIndex(index)
@@ -810,6 +814,8 @@ class Ui_MainWindow(object):
             self.dialogWindow("Proxy Behavior Disabled Notification",
                               "Proxy behavior has been disabled.\nThe system has restored to the previous proxy settings and it will stop appending packet information to the live traffic PCAP file.")
 
+    def showHookInfo(self, hookProperties):
+        hookProperties.show()
 
     def retranslateUi(self, MainWindow):
         _translate = QtCore.QCoreApplication.translate
