@@ -788,7 +788,9 @@ class Ui_MainWindow(object):
         Dialog = QtWidgets.QDialog()
         hookDialog = dialogType
         hookDialog.setupUi(Dialog)
-        hookname, hookdes, hookpath = hookDialog.getData(Dialog)
+        Dialog.exec()
+        # TODO Pending implementation, left it here for reference
+        # hookname, hookdes, hookpath = hookDialog.getData(Dialog)
 
 
     def setPage(self, stackview, index):

@@ -1,11 +1,3 @@
-# -*- coding: utf-8 -*-
-
-# Form implementation generated from reading ui file 'Create_Edit Hook Overlay.ui'
-#
-# Created by: PyQt5 UI code generator 5.12
-#
-# WARNING! All changes made in this file will be lost!
-
 from PyQt5 import QtCore, QtGui, QtWidgets
 
 
@@ -63,7 +55,9 @@ class Ui_CreateEditHook(object):
 
         self.verticalLayout.addWidget(self.Frame_CreateEditHook)
 
-        self.buttonBox.accepted.connect(CreateEditHook.accept)
+        self.save = False
+
+        self.buttonBox.accepted.connect(lambda: self.setSave(CreateEditHook))
         self.buttonBox.rejected.connect(CreateEditHook.reject)
 
         self.retranslateUi(CreateEditHook)
@@ -84,7 +78,24 @@ class Ui_CreateEditHook(object):
         path, _ = QtWidgets.QFileDialog.getOpenFileName()
         textline.setText(path)
 
+    def saveHook(self, dialogWindow, name):
+        name.text()
+        dialogWindow.close()
 
+    def setSave(self, window):
+        if(self.TextBox_HookName.text() != "" and self.TextBox_Description.text() != "" and self.TextBox_HookPath.text() != ""):
+            self.save = True
+        window.close()
+
+    def getData(self, dialog):
+        dialog.exec()
+        if(self.save):
+            hookname = self.TextBox_HookName.text()
+            hookdes = self.TextBox_Description.text()
+            hookpath = self.TextBox_HookPath.text()
+            return hookname, hookdes, hookpath
+        else:
+            return "", "", ""
 
 if __name__ == "__main__":
     import sys
