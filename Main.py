@@ -12,6 +12,7 @@ from CreateEditHookCollectionOverlay import Ui_Dialog as CreateEditHookCollectio
 from MessageBasedOverlay import Ui_Dialog as OkDialog
 
 
+
 class Ui_MainWindow(object):
     def setupUi(self, MainWindow):
         MainWindow.setObjectName("MainWindow")
@@ -57,7 +58,7 @@ class Ui_MainWindow(object):
         self.horizontalLayout_5 = QtWidgets.QHBoxLayout(self.HV_TopContentFrame)
         self.horizontalLayout_5.setObjectName("horizontalLayout_5")
         self.HV_TC_AddHookButton = QtWidgets.QPushButton(self.HV_TopContentFrame)
-        self.HV_TC_AddHookButton.setObjectName("HV_TC_AddHookButton")
+        self.HV_TC_AddHookButton.setObjectName("HV_TC_AddHookButton") #add Hook button: add listenerv to this
         self.horizontalLayout_5.addWidget(self.HV_TC_AddHookButton)
         self.HV_TC_EditButton = QtWidgets.QPushButton(self.HV_TopContentFrame)
         self.HV_TC_EditButton.setObjectName("HV_TC_EditButton")
@@ -89,11 +90,14 @@ class Ui_MainWindow(object):
         self.HV_HookPropertiesGroupBox.setObjectName("HV_HookPropertiesGroupBox")
         self.gridLayout_19 = QtWidgets.QGridLayout(self.HV_HookPropertiesGroupBox)
         self.gridLayout_19.setObjectName("gridLayout_19")
+
+        #Singular hook (bottom box in HookCollection window)
         self.HV_HP_HookTreeView = QtWidgets.QTreeWidget(self.HV_HookPropertiesGroupBox)
-        self.HV_HP_HookTreeView.setObjectName("HV_HP_HookTreeView")
+        self.HV_HP_HookTreeView.setObjectName("HV_HP_HookTreeView") #Tree view for hook items
         self.HV_HP_HookTreeView.headerItem().setTextAlignment(0, QtCore.Qt.AlignLeading|QtCore.Qt.AlignVCenter)
         self.HV_HP_HookTreeView.headerItem().setTextAlignment(1, QtCore.Qt.AlignLeading|QtCore.Qt.AlignVCenter)
         self.HV_HP_HookTreeView.headerItem().setTextAlignment(2, QtCore.Qt.AlignLeading|QtCore.Qt.AlignVCenter)
+
         item_0 = QtWidgets.QTreeWidgetItem(self.HV_HP_HookTreeView)
         item_0.setCheckState(0, QtCore.Qt.Unchecked)
         item_0 = QtWidgets.QTreeWidgetItem(self.HV_HP_HookTreeView)
@@ -101,6 +105,8 @@ class Ui_MainWindow(object):
         self.HV_HP_HookTreeView.header().setCascadingSectionResizes(False)
         self.HV_HP_HookTreeView.header().setDefaultSectionSize(167)
         self.gridLayout_19.addWidget(self.HV_HP_HookTreeView, 0, 0, 1, 2)
+        #end of singular hook section 1#
+
         spacerItem1 = QtWidgets.QSpacerItem(40, 20, QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Minimum)
         self.gridLayout_19.addItem(spacerItem1, 1, 1, 1, 1)
         spacerItem2 = QtWidgets.QSpacerItem(40, 20, QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Minimum)
@@ -158,26 +164,17 @@ class Ui_MainWindow(object):
         self.HCV_HookCollectionProperties_GroupBox.setObjectName("HCV_HookCollectionProperties_GroupBox")
         self.gridLayout_34 = QtWidgets.QGridLayout(self.HCV_HookCollectionProperties_GroupBox)
         self.gridLayout_34.setObjectName("gridLayout_34")
+        
+        #Hook collection Tree STRUCTURE (Top box in Hook Collection Window)
         self.HCV_HCP_TreeView = QtWidgets.QTreeWidget(self.HCV_HookCollectionProperties_GroupBox)
         self.HCV_HCP_TreeView.setObjectName("HCV_HCP_TreeView")
         self.HCV_HCP_TreeView.headerItem().setTextAlignment(0, QtCore.Qt.AlignLeading|QtCore.Qt.AlignVCenter)
         self.HCV_HCP_TreeView.headerItem().setTextAlignment(1, QtCore.Qt.AlignLeading|QtCore.Qt.AlignVCenter)
         self.HCV_HCP_TreeView.headerItem().setTextAlignment(2, QtCore.Qt.AlignLeading|QtCore.Qt.AlignVCenter)
         self.HCV_HCP_TreeView.headerItem().setTextAlignment(3, QtCore.Qt.AlignLeading|QtCore.Qt.AlignVCenter)
-        item_0 = QtWidgets.QTreeWidgetItem(self.HCV_HCP_TreeView)
-        item_0.setCheckState(0, QtCore.Qt.Unchecked)
-        item_1 = QtWidgets.QTreeWidgetItem(item_0)
-        item_1 = QtWidgets.QTreeWidgetItem(item_0)
-        item_2 = QtWidgets.QTreeWidgetItem(item_1)
-        item_0 = QtWidgets.QTreeWidgetItem(self.HCV_HCP_TreeView)
-        item_0.setCheckState(0, QtCore.Qt.Unchecked)
-        item_1 = QtWidgets.QTreeWidgetItem(item_0)
-        item_1 = QtWidgets.QTreeWidgetItem(item_0)
-        item_2 = QtWidgets.QTreeWidgetItem(item_1)
+
         self.HCV_HCP_TreeView.header().setCascadingSectionResizes(False)
         self.HCV_HCP_TreeView.header().setDefaultSectionSize(167)
-        self.HCV_HCP_TreeView.itemSelectionChanged.connect(lambda: self.showHookInfo(self.HCV_HookProperties_GroupBox))
-
         self.gridLayout_34.addWidget(self.HCV_HCP_TreeView, 0, 0, 1, 2)
         spacerItem4 = QtWidgets.QSpacerItem(40, 20, QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Minimum)
         self.gridLayout_34.addItem(spacerItem4, 2, 0, 1, 1)
@@ -188,21 +185,24 @@ class Ui_MainWindow(object):
         self.HCV_HookProperties_GroupBox.setObjectName("HCV_HookProperties_GroupBox")
         self.horizontalLayout_12 = QtWidgets.QHBoxLayout(self.HCV_HookProperties_GroupBox)
         self.horizontalLayout_12.setObjectName("horizontalLayout_12")
+
+
+        #Hook Box STRUCTURE
         self.HCV_HCP_HP_TreeView = QtWidgets.QTreeWidget(self.HCV_HookProperties_GroupBox)
         self.HCV_HCP_HP_TreeView.setObjectName("HCV_HCP_HP_TreeView")
         self.HCV_HCP_HP_TreeView.headerItem().setTextAlignment(0, QtCore.Qt.AlignLeading|QtCore.Qt.AlignVCenter)
         self.HCV_HCP_HP_TreeView.headerItem().setTextAlignment(1, QtCore.Qt.AlignLeading|QtCore.Qt.AlignVCenter)
         self.HCV_HCP_HP_TreeView.headerItem().setTextAlignment(2, QtCore.Qt.AlignLeading|QtCore.Qt.AlignVCenter)
         self.HCV_HCP_HP_TreeView.headerItem().setTextAlignment(3, QtCore.Qt.AlignLeading|QtCore.Qt.AlignVCenter)
-        item_0 = QtWidgets.QTreeWidgetItem(self.HCV_HCP_HP_TreeView)
-        item_0 = QtWidgets.QTreeWidgetItem(self.HCV_HCP_HP_TreeView)
-        item_0 = QtWidgets.QTreeWidgetItem(self.HCV_HCP_HP_TreeView)
+        #item_0 = QtWidgets.QTreeWidgetItem(self.HCV_HCP_HP_TreeView)
+        #item_0 = QtWidgets.QTreeWidgetItem(self.HCV_HCP_HP_TreeView)
+        #item_0 = QtWidgets.QTreeWidgetItem(self.HCV_HCP_HP_TreeView)
         self.horizontalLayout_12.addWidget(self.HCV_HCP_HP_TreeView)
-        self.HCV_HookProperties_GroupBox.hide()
         self.gridLayout_34.addWidget(self.HCV_HookProperties_GroupBox, 1, 0, 1, 2)
         self.verticalLayout_2.addWidget(self.HCV_HookCollectionProperties_GroupBox)
         self.gridLayout_13.addWidget(self.GroupBox_HCV, 1, 0, 1, 1)
         self.StackView.addWidget(self.HookCollectionView)
+        #END OF HOOK VIEW
 
         # Live Packet View
         self.LivePacketView = QtWidgets.QWidget()
@@ -789,9 +789,6 @@ class Ui_MainWindow(object):
         hookDialog = dialogType
         hookDialog.setupUi(Dialog)
         Dialog.exec()
-        # TODO Pending implementation, left it here for reference
-        # hookname, hookdes, hookpath = hookDialog.getData(Dialog)
-
 
     def setPage(self, stackview, index):
         stackview.setCurrentIndex(index)
@@ -816,12 +813,10 @@ class Ui_MainWindow(object):
             self.dialogWindow("Proxy Behavior Disabled Notification",
                               "Proxy behavior has been disabled.\nThe system has restored to the previous proxy settings and it will stop appending packet information to the live traffic PCAP file.")
 
-    def showHookInfo(self, hookProperties):
-        hookProperties.show()
 
     def retranslateUi(self, MainWindow):
         _translate = QtCore.QCoreApplication.translate
-        MainWindow.setWindowTitle(_translate("MainWindow", "Network Traffic Proxy System"))
+        MainWindow.setWindowTitle(_translate("MainWindow", "MainWindow"))
         self.HV_GroupBox_2.setTitle(_translate("MainWindow", "Content View"))
         self.HV_GroupBox.setTitle(_translate("MainWindow", "Hook View"))
         self.HV_TC_AddHookButton.setText(_translate("MainWindow", "+Hook"))
@@ -835,13 +830,17 @@ class Ui_MainWindow(object):
         self.HV_HP_HookTreeView.headerItem().setText(2, _translate("MainWindow", "Association with Hook Collection"))
         __sortingEnabled = self.HV_HP_HookTreeView.isSortingEnabled()
         self.HV_HP_HookTreeView.setSortingEnabled(False)
-        self.HV_HP_HookTreeView.topLevelItem(0).setText(0, _translate("MainWindow", "Hook1"))
+
+        #Fake hook items
+        self.HV_HP_HookTreeView.topLevelItem(0).setText(0, _translate("MainWindow", "Hooky"))
         self.HV_HP_HookTreeView.topLevelItem(0).setText(1, _translate("MainWindow", "Description of hook_name1"))
         self.HV_HP_HookTreeView.topLevelItem(0).setText(2, _translate("MainWindow", "2"))
         self.HV_HP_HookTreeView.topLevelItem(1).setText(0, _translate("MainWindow", "Hook2"))
         self.HV_HP_HookTreeView.topLevelItem(1).setText(1, _translate("MainWindow", "Description of hook_name2"))
         self.HV_HP_HookTreeView.topLevelItem(1).setText(2, _translate("MainWindow", "0"))
         self.HV_HP_HookTreeView.setSortingEnabled(__sortingEnabled)
+
+        #Hook Collection Box
         self.GroupBox_HCV.setTitle(_translate("MainWindow", "Hook Collection View"))
         self.Button_AddHookCollection.setText(_translate("MainWindow", "+Hook Collection"))
         self.Button_Edit.setText(_translate("MainWindow", "Edit"))
@@ -855,21 +854,8 @@ class Ui_MainWindow(object):
         self.HCV_HCP_TreeView.headerItem().setText(3, _translate("MainWindow", "Hook Collection Execution Sequence"))
         __sortingEnabled = self.HCV_HCP_TreeView.isSortingEnabled()
         self.HCV_HCP_TreeView.setSortingEnabled(False)
-        self.HCV_HCP_TreeView.topLevelItem(0).setText(0, _translate("MainWindow", "HookCollection2"))
-        self.HCV_HCP_TreeView.topLevelItem(0).setText(1, _translate("MainWindow", "2"))
-        self.HCV_HCP_TreeView.topLevelItem(0).setText(2, _translate("MainWindow", "Enabled"))
-        self.HCV_HCP_TreeView.topLevelItem(0).setText(3, _translate("MainWindow", "1"))
-        self.HCV_HCP_TreeView.topLevelItem(0).child(0).setText(0, _translate("MainWindow", "Description:"))
-        self.HCV_HCP_TreeView.topLevelItem(0).child(1).setText(0, _translate("MainWindow", "Description of HookCollection 2"))
-        self.HCV_HCP_TreeView.topLevelItem(0).child(1).child(0).setText(0, _translate("MainWindow", "Hook:"))
-        self.HCV_HCP_TreeView.topLevelItem(1).setText(0, _translate("MainWindow", "HookCollection3"))
-        self.HCV_HCP_TreeView.topLevelItem(1).setText(1, _translate("MainWindow", "0"))
-        self.HCV_HCP_TreeView.topLevelItem(1).setText(2, _translate("MainWindow", "Disabled"))
-        self.HCV_HCP_TreeView.topLevelItem(1).setText(3, _translate("MainWindow", "0"))
-        self.HCV_HCP_TreeView.topLevelItem(1).child(0).setText(0, _translate("MainWindow", "Description"))
-        self.HCV_HCP_TreeView.topLevelItem(1).child(1).setText(0, _translate("MainWindow", "Description of HookCollection 3"))
-        self.HCV_HCP_TreeView.topLevelItem(1).child(1).child(0).setText(0, _translate("MainWindow", "Hook:"))
-        self.HCV_HCP_TreeView.setSortingEnabled(__sortingEnabled)
+        
+        #Hook Box
         self.HCV_HookProperties_GroupBox.setTitle(_translate("MainWindow", "Hook Properties"))
         self.HCV_HCP_HP_TreeView.headerItem().setText(0, _translate("MainWindow", "Hook"))
         self.HCV_HCP_HP_TreeView.headerItem().setText(1, _translate("MainWindow", "Description"))
@@ -877,19 +863,9 @@ class Ui_MainWindow(object):
         self.HCV_HCP_HP_TreeView.headerItem().setText(3, _translate("MainWindow", "Hook Execution Sequence"))
         __sortingEnabled = self.HCV_HCP_HP_TreeView.isSortingEnabled()
         self.HCV_HCP_HP_TreeView.setSortingEnabled(False)
-        self.HCV_HCP_HP_TreeView.topLevelItem(0).setText(0, _translate("MainWindow", "Hook1"))
-        self.HCV_HCP_HP_TreeView.topLevelItem(0).setText(1, _translate("MainWindow", "Description1"))
-        self.HCV_HCP_HP_TreeView.topLevelItem(0).setText(2, _translate("MainWindow", "Enabled"))
-        self.HCV_HCP_HP_TreeView.topLevelItem(0).setText(3, _translate("MainWindow", "2"))
-        self.HCV_HCP_HP_TreeView.topLevelItem(1).setText(0, _translate("MainWindow", "Hook2"))
-        self.HCV_HCP_HP_TreeView.topLevelItem(1).setText(1, _translate("MainWindow", "Description2"))
-        self.HCV_HCP_HP_TreeView.topLevelItem(1).setText(2, _translate("MainWindow", "Disabled"))
-        self.HCV_HCP_HP_TreeView.topLevelItem(1).setText(3, _translate("MainWindow", "1"))
-        self.HCV_HCP_HP_TreeView.topLevelItem(2).setText(0, _translate("MainWindow", "Hook3"))
-        self.HCV_HCP_HP_TreeView.topLevelItem(2).setText(1, _translate("MainWindow", "Description3"))
-        self.HCV_HCP_HP_TreeView.topLevelItem(2).setText(2, _translate("MainWindow", "Enabled"))
-        self.HCV_HCP_HP_TreeView.topLevelItem(2).setText(3, _translate("MainWindow", "3"))
-        self.HCV_HCP_HP_TreeView.setSortingEnabled(__sortingEnabled)
+
+
+        #Packet Stuff
         self.LPV_GroupBox_LivePacketView.setTitle(_translate("MainWindow", "Live Packet View"))
         item = self.LPV_Table_FieldArea.verticalHeaderItem(0)
         item.setText(_translate("MainWindow", "New Row"))
@@ -977,6 +953,8 @@ class Ui_MainWindow(object):
         self.LPV_TabView_PacketArea.setTabText(self.LPV_TabView_PacketArea.indexOf(self.LPV_Tab_Binary), _translate("MainWindow", "Binary"))
         __sortingEnabled = self.LPV_ListView_HEX.isSortingEnabled()
         self.LPV_ListView_HEX.setSortingEnabled(False)
+       
+        #Fake packets
         item = self.LPV_ListView_HEX.item(0)
         item.setText(_translate("MainWindow", "kjasfkl jsdfkldsaj fkldsjfksld jk"))
         item = self.LPV_ListView_HEX.item(1)
@@ -1108,15 +1086,102 @@ class Ui_MainWindow(object):
         self.OV_HookCollectionButton.setText(_translate("MainWindow", "Hook Collection"))
         self.OV_LivePacketButton.setText(_translate("MainWindow", "Live Packet"))
         self.OV_PacketFromPCAPButton.setText(_translate("MainWindow", "Packet from PCAP"))
+    
+    ##UPDATERS: These methods update the main GUI to reflect the model##
+    
+     #Update the Hook Collection View GUI to show the Hook Collections (the top box in the Hook Collection View)
+     #You should call this every time you add, delete, or edit a hook
+    def updateCollectionGui(self,manager):
+        
+        #Dump everything in the ui element! We're rebuilding it
+        self.HCV_HCP_TreeView.clear()
 
+        rowNum = 0 #current item being generated in the list
 
+        for c in manager.collection: #for each hook collection in the manager, generate a new QTreeView item for it
+            item_0 = QtWidgets.QTreeWidgetItem(self.HCV_HCP_TreeView)
+            item_0.setCheckState(0, QtCore.Qt.Unchecked)
+            self.HCV_HCP_TreeView.topLevelItem(rowNum).setText(0, c.getCollName()) #isplay Collection name
+            self.HCV_HCP_TreeView.topLevelItem(rowNum).setText(1, str(len(c.getHooks()))) #display # of hooks the collection has
+            self.HCV_HCP_TreeView.topLevelItem(rowNum).setText(2, str(c.getCollStatus())) #display the status of the Collection
+            self.HCV_HCP_TreeView.topLevelItem(rowNum).setText(3, str(c.getCollSeqNum())) #display collection sequence number
 
+            rowNum+=1 #makes sure we're placing each new hook collection in a new row
+        
+
+        return
+    
+    #Update the Hook Collection View GUI to show the given Hook Collection's hooks (the bottom box in the Hook Collection View)
+    def updateCollectionHookList(self,collection):
+
+        #Dump everything in the ui element! We're rebuilding it
+        self.HCV_HCP_HP_TreeView.clear()
+
+        rowNum = 0 #current item being generated in the list
+
+        for h in collection.getHooks(): #for each hook in the collection, generate a QTreeView item for it
+            item_0 = QtWidgets.QTreeWidgetItem(self.HCV_HCP_HP_TreeView)
+            item_0.setCheckState(0, QtCore.Qt.Unchecked)
+            self.HCV_HCP_HP_TreeView.topLevelItem(rowNum).setText(0, h.getName()) #display hook name
+            self.HCV_HCP_HP_TreeView.topLevelItem(rowNum).setText(1, h.getDesc()) #display hook desc
+            self.HCV_HCP_HP_TreeView.topLevelItem(rowNum).setText(2, str(h.getStatus())) #display hook status
+            self.HCV_HCP_HP_TreeView.topLevelItem(rowNum).setText(3, str(h.getSeqNum())) #display hook sequence num
+
+            rowNum+=1 #makes sure we're placing each new hook in a new row in the gui
+
+        return
+        
+###end of UI class###
+
+#test the UI's ability to represent our model by creating a manager with 4 collections in it
+def buildSample():
+     #create a hook called 'testHook'with the name 'Test'. Its sequence is not set automatically.
+    testHook = Hook("Test1",True,"A test hook!",0,"C:/Users/octob/Documents/NTPSProject/Interceptor/testHook.py")
+    testHook1 = Hook("Test2",True,"A test hook!",0,"C:/Users/octob/Documents/NTPSProject/Interceptor/testHook.py")
+    testHook2 = Hook("Test3",True,"A test hook!",0,"C:/Users/octob/Documents/NTPSProject/Interceptor/testHook.py")
+    testHook3 = Hook("Test4",True,"A test hook!",0,"C:/Users/octob/Documents/NTPSProject/Interceptor/testHook.py")
+
+    #create hook collections and put the hooks list in it
+    hc = HookCollection("testColl1",0,True,"A test hook collection.",[testHook])
+    hc1 = HookCollection("testColl2",1,True,"A test hook collection.",[testHook1])
+    hc2 = HookCollection("testColl3",2,True,"A test hook collection.",[testHook2])
+    hc3 = HookCollection("testColl4",3,True,"A test hook collection.",[testHook3])
+
+    #create a list of HookCollections; right now, there's only one hook collection in it
+    collections = [hc]
+    collections.append(hc1)
+    collections.append(hc2)
+    collections.append(hc3)
+
+    #create HookCollectionManager called 'manager' and add 'collections' to it.
+    #remember that managers also store hooks without assigning them to collections; 
+    #we add a copy of the testHook to illustrate this.
+    manager = HookCollectionManager(collections,testHook)
+
+    return manager
 
 if __name__ == "__main__":
     import sys
-    app = QtWidgets.QApplication(sys.argv)
-    MainWindow = QtWidgets.QMainWindow()
-    ui = Ui_MainWindow()
-    ui.setupUi(MainWindow)
-    MainWindow.show()
+    from Hook import Hook
+    from HookCollection import HookCollection
+    from HookCollectionManager import HookCollectionManager
+    from PyQt5 import QtCore, QtGui, QtWidgets
+    from CreateEditHookOverlay import Ui_CreateEditHook as CreateEditHook
+    from CreateEditHookCollectionOverlay import Ui_Dialog as CreateEditHookCollection
+    from MessageBasedOverlay import Ui_Dialog as OkDialog
+
+    app = QtWidgets.QApplication(sys.argv) #create new instance of the application
+    MainWindow = QtWidgets.QMainWindow() #Create a new main window
+    ui = Ui_MainWindow() #create a ui
+    ui.setupUi(MainWindow) #attach the generated ui to the main window 
+
+    manager = buildSample() #generate a fake set of collections to test the display
+
+    ui.updateCollectionGui(manager) #update the ui to display the collections
+    ui.updateCollectionHookList(manager.getCollections()[0]) #right now, we only display the hooks of the first collection
+    #TODO: add listener to the QTreeView so that the Hook list (the box at the bottom of the Hook Collection View) 
+    #displays the hooks of the clicked collection
+
+    MainWindow.show() #display the main window
+
     sys.exit(app.exec_())
