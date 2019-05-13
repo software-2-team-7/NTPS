@@ -177,7 +177,7 @@ class Ui_MainWindow(object):
         self.HCV_HCP_TreeView.headerItem().setTextAlignment(3, QtCore.Qt.AlignLeading|QtCore.Qt.AlignVCenter)
         
         self.HCV_HCP_TreeView.header().setCascadingSectionResizes(False)
-        self.HCV_HCP_TreeView.header().setDefaultSectionSize(167)
+        self.HCV_HCP_TreeView.header().setDefaultSectionSize(250)
         self.gridLayout_34.addWidget(self.HCV_HCP_TreeView, 0, 0, 1, 2)
         spacerItem4 = QtWidgets.QSpacerItem(40, 20, QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Minimum)
         self.gridLayout_34.addItem(spacerItem4, 2, 0, 1, 1)
@@ -1103,16 +1103,39 @@ class Ui_MainWindow(object):
         for c in manager.collection: #for each hook collection in the manager, generate a new QTreeView item for it
             item_0 = QtWidgets.QTreeWidgetItem(self.HCV_HCP_TreeView)
             item_0.setCheckState(0, QtCore.Qt.Unchecked)
-            self.HCV_HCP_TreeView.topLevelItem(rowNum).setText(0, c.getCollName()) #isplay Collection name
+
+            self.HCV_HCP_TreeView.topLevelItem(rowNum).setText(0, c.getCollName()) #display Collection name
             self.HCV_HCP_TreeView.topLevelItem(rowNum).setText(1, str(len(c.getHooks()))) #display # of hooks the collection has
             self.HCV_HCP_TreeView.topLevelItem(rowNum).setText(2, str(c.getCollStatus())) #display the status of the Collection
             self.HCV_HCP_TreeView.topLevelItem(rowNum).setText(3, str(c.getCollSeqNum())) #display collection sequence number
+            
+            #Structure and display for Hook Collection description
+            header = QtWidgets.QTreeWidgetItem(item_0)
+            header.setText(0, "| Description |")
+            child1 = QtWidgets.QTreeWidgetItem(item_0)
+            child1.setText(0, c.getCollDesc())
+
+            #Header and display of Hooks in the collection
+            hookHeader = QtWidgets.QTreeWidgetItem(item_0)
+            hook = QtWidgets.QTreeWidgetItem(item_0)
+            hookHeader.setText(0,"| Hook |")
+            hookHeader.setText(1, "| Description |")
+            hookHeader.setText(2, "| Hook Status |")
+            hookHeader.setText(3, "| Hook Execution Sequence |")
+
+            for h in c.getHooks(): #for each hook, get its info and display it
+
+                hook.setText(0, h.getName())
+                hook.setText(1, h.getDesc())
+                hook.setText(2, str(h.getStatus()))
+                hook.setText(3, str(h.getSeqNum()))
 
             rowNum+=1 #makes sure we're placing each new hook collection in a new row
         return
+
     
     #Update the Hook Collection View GUI to show the given Hook Collection's hooks (the bottom box in the Hook Collection View)
-    def updateCollectionHookList(self,collection):
+"""     def updateCollectionHookList(self,collection):
         self.HCV_HCP_HP_TreeView.clear() #Dump everything currently displyed in the ui element! We're rebuilding it
 
         rowNum = 0 #current item being generated in the list
@@ -1121,12 +1144,13 @@ class Ui_MainWindow(object):
             item_0 = QtWidgets.QTreeWidgetItem(self.HCV_HCP_HP_TreeView)
             item_0.setCheckState(0, QtCore.Qt.Unchecked)
             self.HCV_HCP_HP_TreeView.topLevelItem(rowNum).setText(0, h.getName()) #display hook name
-            self.HCV_HCP_HP_TreeView.topLevelItem(rowNum).setText(1, h.getDesc()) #display hook desc
+            self.HCV_HCP_HP_TreeView.topLevelItem(rowNum).setText(1, "Description: " + h.getDesc()) #display hook desc
             self.HCV_HCP_HP_TreeView.topLevelItem(rowNum).setText(2, str(h.getStatus())) #display hook status
             self.HCV_HCP_HP_TreeView.topLevelItem(rowNum).setText(3, str(h.getSeqNum())) #display hook sequence num
+            
 
             rowNum+=1 #makes sure we're placing each new hook in a new row in the gui
-        return
+        return """
 
     ##END HOOK COLLECTION VIEW UPDATERS
 
@@ -1194,7 +1218,8 @@ if __name__ == "__main__":
     manager = buildSample() #generate a fake set of collections to test the display
 
     ui.updateCollectionGui(manager) #update the ui to display the collections
-    ui.updateCollectionHookList(manager.getCollections()[0]) #right now, we only display the hooks of the first collection
+    #ui.updateCollectionHookList(manager.getCollections()[0]) #right now, we only display the hooks of the first collection
+    
     #TODO: add listener to the QTreeView so that the Hook list (the box at the bottom of the Hook Collection View) 
     #displays the hooks of the clicked collection
 
