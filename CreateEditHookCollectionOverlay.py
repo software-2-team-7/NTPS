@@ -8,6 +8,7 @@ class Ui_Dialog(object):
     def setupUi(self, Dialog,manager):
 
         self.manager = manager
+
         Dialog.setObjectName("Dialog")
         Dialog.resize(640, 480)
         #Dialog.setStyleSheet("background_color: rgb(255, 255, 255)\n")
@@ -95,153 +96,6 @@ class Ui_Dialog(object):
         self.label_3.setObjectName("label_3")
         self.gridLayout_3.addWidget(self.label_3, 0, 5, 1, 1)
 
-        #self.label_4 = QtWidgets.QLabel(self.scrollAreaWidgetContents)
-        #self.label_4.setObjectName("label_4")
-        #self.gridLayout_3.addWidget(self.label_4, 7, 1, 1, 1)
-
-        #self.label_9 = QtWidgets.QLabel(self.scrollAreaWidgetContents)
-        #self.label_9.setObjectName("label_9")
-        #self.gridLayout_3.addWidget(self.label_9, 6, 1, 1, 1)
-
-        #self.label_10 = QtWidgets.QLabel(self.scrollAreaWidgetContents)
-        #self.label_10.setObjectName("label_10")
-        #self.gridLayout_3.addWidget(self.label_10, 1, 1, 1, 1)
-
-        #self.label_11 = QtWidgets.QLabel(self.scrollAreaWidgetContents)
-        #self.label_11.setObjectName("label_11")
-        #self.gridLayout_3.addWidget(self.label_11, 2, 1, 1, 1)
-
-        #self.label_12 = QtWidgets.QLabel(self.scrollAreaWidgetContents)
-        #self.label_12.setObjectName("label_12")
-        #self.gridLayout_3.addWidget(self.label_12, 5, 1, 1, 1)
-
-        #self.label_13 = QtWidgets.QLabel(self.scrollAreaWidgetContents)
-        #self.label_13.setObjectName("label_13")
-        #self.gridLayout_3.addWidget(self.label_13, 4, 1, 1, 1)
-
-        #self.label_14 = QtWidgets.QLabel(self.scrollAreaWidgetContents)
-        #self.label_14.setObjectName("label_14")
-        #self.gridLayout_3.addWidget(self.label_14, 3, 1, 1, 1)
-
-    #ENABLE/DISABLE COLUMN
-        #self.comboBox = QtWidgets.QComboBox(self.scrollAreaWidgetContents)
-        #self.comboBox.setObjectName("comboBox")
-        #self.comboBox.addItem("")
-        #self.comboBox.addItem("")
-        #self.comboBox.addItem("")
-        #self.gridLayout_3.addWidget(self.comboBox, 7, 3, 1, 1)
-        
-        #self.comboBox_3 = QtWidgets.QComboBox(self.scrollAreaWidgetContents)
-        #self.comboBox_3.setObjectName("comboBox_3")
-        #self.comboBox_3.addItem("")
-        #self.comboBox_3.addItem("")
-        #self.comboBox_3.addItem("")
-        #self.gridLayout_3.addWidget(self.comboBox_3, 6, 3, 1, 1)
-
-        #self.comboBox_4 = QtWidgets.QComboBox(self.scrollAreaWidgetContents)
-        #self.comboBox_4.setObjectName("comboBox_4")
-        #self.comboBox_4.addItem("")
-        #self.comboBox_4.addItem("")
-        #self.comboBox_4.addItem("")
-        #self.gridLayout_3.addWidget(self.comboBox_4, 4, 3, 1, 1)
-
-        #self.comboBox_5 = QtWidgets.QComboBox(self.scrollAreaWidgetContents)
-        #self.comboBox_5.setObjectName("comboBox_5")
-        #self.comboBox_5.addItem("")
-        #self.comboBox_5.addItem("")
-        #self.comboBox_5.addItem("")
-        #self.gridLayout_3.addWidget(self.comboBox_5, 3, 3, 1, 1)
-
-        #self.comboBox_6 = QtWidgets.QComboBox(self.scrollAreaWidgetContents)
-        #self.comboBox_6.setObjectName("comboBox_6")
-        #self.comboBox_6.addItem("")
-        #self.comboBox_6.addItem("")
-        #self.comboBox_6.addItem("")
-        #self.gridLayout_3.addWidget(self.comboBox_6, 5, 3, 1, 1)
-
-        #self.comboBox_7 = QtWidgets.QComboBox(self.scrollAreaWidgetContents)
-        #self.comboBox_7.setObjectName("comboBox_7")
-        #self.comboBox_7.addItem("")
-        #self.comboBox_7.addItem("")
-        #self.comboBox_7.addItem("")
-        #self.gridLayout_3.addWidget(self.comboBox_7, 1, 3, 1, 1)
-
-        #self.comboBox_8 = QtWidgets.QComboBox(self.scrollAreaWidgetContents)
-        #self.comboBox_8.setObjectName("comboBox_8")
-        #self.comboBox_8.addItem("")
-        #self.comboBox_8.addItem("")
-        #self.comboBox_8.addItem("")
-        #self.gridLayout_3.addWidget(self.comboBox_8, 2, 3, 1, 1)
-
-        #ENABLE/DISABLE COLUMN END
-
-        #CHECKBOX COLUMN
-
-        #self.checkBox = QtWidgets.QCheckBox(self.scrollAreaWidgetContents)
-        #self.checkBox.setText("")
-        #self.checkBox.setObjectName("checkBox")
-        #self.gridLayout_3.addWidget(self.checkBox, 7, 0, 1, 1)
-
-        #self.checkBox_2 = QtWidgets.QCheckBox(self.scrollAreaWidgetContents)
-        #self.checkBox_2.setText("")
-        #self.checkBox_2.setObjectName("checkBox_2")
-        #self.gridLayout_3.addWidget(self.checkBox_2, 6, 0, 1, 1)
-
-        #self.checkBox_3 = QtWidgets.QCheckBox(self.scrollAreaWidgetContents)
-        #self.checkBox_3.setText("")
-        #self.checkBox_3.setObjectName("checkBox_3")
-        #self.gridLayout_3.addWidget(self.checkBox_3, 5, 0, 1, 1)
-
-        #self.checkBox_4 = QtWidgets.QCheckBox(self.scrollAreaWidgetContents)
-        #self.checkBox_4.setText("")
-        #self.checkBox_4.setObjectName("checkBox_4")
-        #self.gridLayout_3.addWidget(self.checkBox_4, 4, 0, 1, 1)
-
-        #self.checkBox_5 = QtWidgets.QCheckBox(self.scrollAreaWidgetContents)
-        #self.checkBox_5.setText("")
-        #self.checkBox_5.setObjectName("checkBox_5")
-        #self.gridLayout_3.addWidget(self.checkBox_5, 3, 0, 1, 1)
-
-        #self.checkBox_6 = QtWidgets.QCheckBox(self.scrollAreaWidgetContents)
-        #self.checkBox_6.setText("")
-        #self.checkBox_6.setObjectName("checkBox_6")
-        #self.gridLayout_3.addWidget(self.checkBox_6, 2, 0, 1, 1)
-
-        #self.checkBox_7 = QtWidgets.QCheckBox(self.scrollAreaWidgetContents)
-        #self.checkBox_7.setText("")
-        #self.checkBox_7.setObjectName("checkBox_7")
-        #self.gridLayout_3.addWidget(self.checkBox_7, 1, 0, 1, 1)
-
-        #CHECKBOX COLUMN END
-
-        #self.lineEdit = QtWidgets.QLineEdit(self.scrollAreaWidgetContents)
-        #self.lineEdit.setObjectName("lineEdit")
-        #self.gridLayout_3.addWidget(self.lineEdit, 7, 5, 1, 1)
-
-        #self.lineEdit_5 = QtWidgets.QLineEdit(self.scrollAreaWidgetContents)
-        #self.lineEdit_5.setObjectName("lineEdit_5")
-        #self.gridLayout_3.addWidget(self.lineEdit_5, 3, 5, 1, 1)
-
-        #self.lineEdit_6 = QtWidgets.QLineEdit(self.scrollAreaWidgetContents)
-        #self.lineEdit_6.setObjectName("lineEdit_6")
-        #self.gridLayout_3.addWidget(self.lineEdit_6, 2, 5, 1, 1)
-
-        #self.lineEdit_7 = QtWidgets.QLineEdit(self.scrollAreaWidgetContents)
-        #self.lineEdit_7.setObjectName("lineEdit_7")
-        #self.gridLayout_3.addWidget(self.lineEdit_7, 6, 5, 1, 1)
-
-        #self.lineEdit_8 = QtWidgets.QLineEdit(self.scrollAreaWidgetContents)
-        #self.lineEdit_8.setObjectName("lineEdit_8")
-        #self.gridLayout_3.addWidget(self.lineEdit_8, 5, 5, 1, 1)
-
-        #self.lineEdit_9 = QtWidgets.QLineEdit(self.scrollAreaWidgetContents)
-        #self.lineEdit_9.setObjectName("lineEdit_9")
-        #self.gridLayout_3.addWidget(self.lineEdit_9, 4, 5, 1, 1)
-        
-        #self.lineEdit_10 = QtWidgets.QLineEdit(self.scrollAreaWidgetContents)
-        #self.lineEdit_10.setObjectName("lineEdit_10")
-        #self.gridLayout_3.addWidget(self.lineEdit_10, 1, 5, 1, 1)
-
         self.line = QtWidgets.QFrame(self.scrollAreaWidgetContents)
         self.line.setFrameShape(QtWidgets.QFrame.VLine)
         self.line.setFrameShadow(QtWidgets.QFrame.Sunken)
@@ -303,43 +157,6 @@ class Ui_Dialog(object):
         self.label.setText(_translate("Dialog", "Hook"))
         self.label_2.setText(_translate("Dialog", "Status"))
         self.label_3.setText(_translate("Dialog", "Hook Execution Sequence"))
-        #self.label_4.setText(_translate("Dialog", "Hook1"))
-        #self.label_10.setText(_translate("Dialog", "Hook1"))
-        #self.comboBox_4.setItemText(0, _translate("Dialog", "Enabled/Disabled"))
-        #self.comboBox_4.setItemText(1, _translate("Dialog", "Enabled"))
-        #self.comboBox_4.setItemText(2, _translate("Dialog", "Disabled"))
-        #self.comboBox.setItemText(0, _translate("Dialog", "Enabled/Disabled"))
-        #self.comboBox.setItemText(1, _translate("Dialog", "Enabled"))
-        #self.comboBox.setItemText(2, _translate("Dialog", "Disabled"))
-        
-        
-        #self.comboBox_3.setItemText(0, _translate("Dialog", "Enabled/Disabled"))
-        #self.comboBox_3.setItemText(1, _translate("Dialog", "Enabled"))
-        #self.comboBox_3.setItemText(2, _translate("Dialog", "Disabled"))
-        #self.comboBox_7.setItemText(0, _translate("Dialog", "Enabled/Disabled"))
-        #self.comboBox_7.setItemText(1, _translate("Dialog", "Enabled"))
-        #self.comboBox_7.setItemText(2, _translate("Dialog", "Disabled"))
-        #self.label_9.setText(_translate("Dialog", "Hook1"))
-        #self.label_11.setText(_translate("Dialog", "Hook1"))
-        #self.lineEdit.setPlaceholderText(_translate("Dialog", "Enter Sequence No."))
-        #self.lineEdit_6.setPlaceholderText(_translate("Dialog", "Enter Sequence No."))
-        #self.lineEdit_5.setPlaceholderText(_translate("Dialog", "Enter Sequence No."))
-        #self.lineEdit_7.setPlaceholderText(_translate("Dialog", "Enter Sequence No."))
-        #self.comboBox_5.setItemText(0, _translate("Dialog", "Enabled/Disabled"))
-        #self.comboBox_5.setItemText(1, _translate("Dialog", "Enabled"))
-        #self.comboBox_5.setItemText(2, _translate("Dialog", "Disabled"))
-        #self.comboBox_6.setItemText(0, _translate("Dialog", "Enabled/Disabled"))
-        #self.comboBox_6.setItemText(1, _translate("Dialog", "Enabled"))
-        #self.comboBox_6.setItemText(2, _translate("Dialog", "Disabled"))
-        #self.label_12.setText(_translate("Dialog", "Hook1"))
-        #self.label_13.setText(_translate("Dialog", "Hook1"))
-        #self.comboBox_8.setItemText(0, _translate("Dialog", "Enabled/Disabled"))
-        #self.comboBox_8.setItemText(1, _translate("Dialog", "Enabled"))
-        #self.comboBox_8.setItemText(2, _translate("Dialog", "Disabled"))
-        #self.lineEdit_8.setPlaceholderText(_translate("Dialog", "Enter Sequence No."))
-        #self.label_14.setText(_translate("Dialog", "Hook1"))
-        #self.lineEdit_9.setPlaceholderText(_translate("Dialog", "Enter Sequence No."))
-        #self.lineEdit_10.setPlaceholderText(_translate("Dialog", "Enter Sequence No."))
     
     def updateHookBox(self):
         
@@ -357,7 +174,7 @@ class Ui_Dialog(object):
             self.hookNameLabel.setObjectName("label_4")
             self.gridLayout_3.addWidget(self.hookNameLabel, rowNum, 1, 1, 1)
             self.hookNameLabel.setText(h.getName())
-            #aqds the hook enable/disable option
+            #adds the hook enable/disable option
             self.comboBox = QtWidgets.QComboBox(self.scrollAreaWidgetContents)
             self.comboBox.setObjectName("comboBox")
             self.comboBox.addItem("")
@@ -375,10 +192,12 @@ class Ui_Dialog(object):
             
             rowNum+=1 #to the next row!
 
-
         return
 
-        
+
+    
+
+    
 
 
 if __name__ == "__main__":
