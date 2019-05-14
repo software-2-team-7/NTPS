@@ -373,7 +373,6 @@ class Ui_Dialog(object):
             self.seqEdit.setPlaceholderText("Enter Sequence No.")
             self.gridLayout_3.addWidget(self.seqEdit, rowNum, 5, 1, 1)
             
-
             rowNum+=1 #to the next row!
 
 

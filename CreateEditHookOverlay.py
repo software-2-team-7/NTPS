@@ -2,7 +2,9 @@ from PyQt5 import QtCore, QtGui, QtWidgets
 
 
 class Ui_CreateEditHook(object):
-    def setupUi(self, CreateEditHook):
+    def setupUi(self, CreateEditHook,manager):
+        self.manager = manager
+
         CreateEditHook.setObjectName("CreateEditHook")
         CreateEditHook.resize(545, 186)
         CreateEditHook.setMinimumSize(QtCore.QSize(545, 186))
@@ -102,6 +104,6 @@ if __name__ == "__main__":
     app = QtWidgets.QApplication(sys.argv)
     CreateEditHook = QtWidgets.QDialog()
     ui = Ui_CreateEditHook()
-    ui.setupUi(CreateEditHook)
+    ui.setupUi(CreateEditHook,ui.manager)
     CreateEditHook.show()
     sys.exit(app.exec_())

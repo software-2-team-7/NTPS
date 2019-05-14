@@ -824,7 +824,7 @@ class Ui_MainWindow(object):
     def createHookDialog(self,dialogType):
         Dialog = QtWidgets.QDialog()
         hookDialog = dialogType
-        hookDialog.setupUi(Dialog)
+        hookDialog.setupUi(Dialog,self.manager)
         Dialog.exec()
         
         if hookDialog:
