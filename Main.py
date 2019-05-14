@@ -816,10 +816,10 @@ class Ui_MainWindow(object):
                     stat = True
                 else:
                     stat = False
-                
-                newColl = HookCollection(name,seq,stat,desc,[])
-                manager.addHookCollection(newColl)
-                self.updateCollectionGui(manager)
+                if (name != "" and seq != ""): #only save if there's a name and sequence number there!
+                    newColl = HookCollection(name,seq,stat,desc,[])
+                    manager.addHookCollection(newColl)
+                    self.updateCollectionGui(manager)
     
     def createHookDialog(self,dialogType):
         Dialog = QtWidgets.QDialog()
