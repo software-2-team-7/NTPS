@@ -878,16 +878,7 @@ class Ui_MainWindow(object):
         self.HV_HP_HookTreeView.headerItem().setText(2, _translate("MainWindow", "Association with Hook Collection"))
         __sortingEnabled = self.HV_HP_HookTreeView.isSortingEnabled()
         self.HV_HP_HookTreeView.setSortingEnabled(False)
-
-        #Fake hook items - these should be deleted once the actual system implementation is complete
-        self.HV_HP_HookTreeView.topLevelItem(0).setText(0, _translate("MainWindow", "Hooky"))
-        self.HV_HP_HookTreeView.topLevelItem(0).setText(1, _translate("MainWindow", "Description of hook_name1"))
-        self.HV_HP_HookTreeView.topLevelItem(0).setText(2, _translate("MainWindow", "2"))
-        self.HV_HP_HookTreeView.topLevelItem(1).setText(0, _translate("MainWindow", "Hook2"))
-        self.HV_HP_HookTreeView.topLevelItem(1).setText(1, _translate("MainWindow", "Description of hook_name2"))
-        self.HV_HP_HookTreeView.topLevelItem(1).setText(2, _translate("MainWindow", "0"))
-        self.HV_HP_HookTreeView.setSortingEnabled(__sortingEnabled)
-
+        
         #Hook Collection Box
         self.GroupBox_HCV.setTitle(_translate("MainWindow", "Hook Collection View"))
         self.Button_AddHookCollection.setText(_translate("MainWindow", "+Hook Collection"))
