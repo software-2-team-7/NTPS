@@ -14,6 +14,9 @@ from MessageBasedOverlay import Ui_Dialog as OkDialog
 
 
 class Ui_MainWindow(object):
+
+    manager = ""
+
     def setupUi(self, MainWindow):
         MainWindow.setObjectName("MainWindow")
         MainWindow.resize(1139, 796)
@@ -47,18 +50,21 @@ class Ui_MainWindow(object):
         self.gridLayout_17 = QtWidgets.QGridLayout(self.HookView)
         self.gridLayout_17.setObjectName("gridLayout_17")
         self.HV_GroupBox = QtWidgets.QGroupBox(self.HookView)
+
         self.HV_GroupBox.setAlignment(QtCore.Qt.AlignCenter)
         self.HV_GroupBox.setObjectName("HV_GroupBox")
         self.verticalLayout_3 = QtWidgets.QVBoxLayout(self.HV_GroupBox)
         self.verticalLayout_3.setObjectName("verticalLayout_3")
         self.HV_TopContentFrame = QtWidgets.QFrame(self.HV_GroupBox)
+
+        #Setting format for frame in Hook View
         self.HV_TopContentFrame.setFrameShape(QtWidgets.QFrame.NoFrame)
         self.HV_TopContentFrame.setFrameShadow(QtWidgets.QFrame.Raised)
         self.HV_TopContentFrame.setObjectName("HV_TopContentFrame")
         self.horizontalLayout_5 = QtWidgets.QHBoxLayout(self.HV_TopContentFrame)
         self.horizontalLayout_5.setObjectName("horizontalLayout_5")
         self.HV_TC_AddHookButton = QtWidgets.QPushButton(self.HV_TopContentFrame)
-        self.HV_TC_AddHookButton.setObjectName("HV_TC_AddHookButton") #add Hook button: add listenerv to this
+        self.HV_TC_AddHookButton.setObjectName("HV_TC_AddHookButton")
         self.horizontalLayout_5.addWidget(self.HV_TC_AddHookButton)
         self.HV_TC_EditButton = QtWidgets.QPushButton(self.HV_TopContentFrame)
         self.HV_TC_EditButton.setObjectName("HV_TC_EditButton")
@@ -76,6 +82,7 @@ class Ui_MainWindow(object):
         self.HV_TC_TextBox.setObjectName("HV_TC_TextBox")
         self.horizontalLayout_5.addWidget(self.HV_TC_TextBox)
         self.verticalLayout_3.addWidget(self.HV_TopContentFrame)
+
         self.HV_HookPropertiesGroupBox = QtWidgets.QGroupBox(self.HV_GroupBox)
         self.HV_HookPropertiesGroupBox.setEnabled(True)
         self.HV_HookPropertiesGroupBox.setMaximumSize(QtCore.QSize(16777215, 16777215))
@@ -91,7 +98,7 @@ class Ui_MainWindow(object):
         self.gridLayout_19 = QtWidgets.QGridLayout(self.HV_HookPropertiesGroupBox)
         self.gridLayout_19.setObjectName("gridLayout_19")
 
-        #Singular hook (bottom box in HookCollection window)
+        #Singular hooks (bottom box in HookCollection window)
         self.HV_HP_HookTreeView = QtWidgets.QTreeWidget(self.HV_HookPropertiesGroupBox)
         self.HV_HP_HookTreeView.setObjectName("HV_HP_HookTreeView") #Tree view for hook items
         self.HV_HP_HookTreeView.headerItem().setTextAlignment(0, QtCore.Qt.AlignLeading|QtCore.Qt.AlignVCenter)
@@ -103,7 +110,7 @@ class Ui_MainWindow(object):
         item_0 = QtWidgets.QTreeWidgetItem(self.HV_HP_HookTreeView)
         item_0.setCheckState(0, QtCore.Qt.Unchecked)
         self.HV_HP_HookTreeView.header().setCascadingSectionResizes(False)
-        self.HV_HP_HookTreeView.header().setDefaultSectionSize(167)
+        self.HV_HP_HookTreeView.header().setDefaultSectionSize(250)
         self.gridLayout_19.addWidget(self.HV_HP_HookTreeView, 0, 0, 1, 2)
         #end of singular hook section 1#
 
@@ -770,35 +777,74 @@ class Ui_MainWindow(object):
         self.PFP_TabView_PacketArea.setCurrentIndex(0)
         QtCore.QMetaObject.connectSlotsByName(MainWindow)
 
-        # Button logic
+        ##Button logic##
         # For Hook view
         self.OV_HookButton.clicked.connect(lambda: self.setPage(self.StackView, 1))
-        self.HV_TC_AddHookButton.clicked.connect(lambda: self.createEditDialog(CreateEditHook()))
-        self.HV_TC_EditButton.clicked.connect(lambda: self.createEditDialog(CreateEditHook()))  # TODO Accept selected Hook to edit
+        self.HV_TC_AddHookButton.clicked.connect(lambda: self.createHookDialog(CreateEditHook()))
+        self.HV_TC_EditButton.clicked.connect(lambda: self.createEditDialog(CreateEditHook(),"edithook"))  # TODO Accept selected Hook to edit
+        
         # For Hook Collection View
         self.OV_HookCollectionButton.clicked.connect(lambda: self.setPage(self.StackView, 2))
-        self.Button_AddHookCollection.clicked.connect(lambda: self.createEditDialog(CreateEditHookCollection()))
-        self.Button_Edit.clicked.connect(lambda: self.createEditDialog(CreateEditHookCollection())) # TODO Accept selected Hook collection to edit
+        self.Button_AddHookCollection.clicked.connect(lambda: self.createEditDialog(CreateEditHookCollection(),"addcoll"))
+        self.Button_Edit.clicked.connect(lambda: self.createEditDialog(CreateEditHookCollection(),"editcoll")) # TODO Accept selected Hook collection to edit
+        
         # For Live Packet View
         self.OV_LivePacketButton.clicked.connect(lambda: self.setPage(self.StackView, 3))
         self.LPV_ComboBox_ProxyBehavior.currentTextChanged.connect(lambda: self.isEnabled(self.LPV_ComboBox_ProxyBehavior, self.LPV_ComboBox_InterceptionBehavior, self.LPV_TextBox_QueueSize))
+        
         # For PCAP View
         self.OV_PacketFromPCAPButton.clicked.connect(lambda: self.setPage(self.StackView, 4))
 
+    #Get new Collection info
+    def createEditDialog(self, dialogType,checkType):
+        Dialog = QtWidgets.QDialog()
+        hookDialog = dialogType
+        hookDialog.setupUi(Dialog,manager)
+        hookDialog.updateHookBox()
+        Dialog.exec()
 
-    def createEditDialog(self, dialogType):
+        if hookDialog:
+            if (checkType=="addcoll"):
+                #get what the user put in
+                name = hookDialog.nameBox.text()
+                seq = hookDialog.seqBox.text()
+                stat = hookDialog.statusBox.currentText()
+                desc = hookDialog.descBox.text()
+                
+                #determine enabled/disabled status
+                if(stat.lower()=="enabled"):
+                    stat = True
+                else:
+                    stat = False
+                
+                newColl = HookCollection(name,seq,stat,desc,[])
+                manager.addHookCollection(newColl)
+                self.updateCollectionGui(manager)
+    
+    def createHookDialog(self,dialogType):
         Dialog = QtWidgets.QDialog()
         hookDialog = dialogType
         hookDialog.setupUi(Dialog)
         Dialog.exec()
+        
+        if hookDialog:
+            name = hookDialog.TextBox_HookName.text()
+            desc = hookDialog.TextBox_Description.text()
+            path = hookDialog.TextBox_HookPath.text()
+
+            newHook = Hook(name,False,desc,-1,path)
+            manager.addHook(newHook)
+            self.updateHookUI(manager)
+
+
 
     def setPage(self, stackview, index):
         stackview.setCurrentIndex(index)
 
-    def dialogWindow(self, tittle="", message=""):
+    def dialogWindow(self, title="", message=""):
         Dialog = QtWidgets.QDialog()
         okdialog = OkDialog()
-        okdialog.setupUi(Dialog, tittle, message)
+        okdialog.setupUi(Dialog, title, message)
         Dialog.exec()
 
     def isEnabled(self, combobox, interceptionButton, queueText):
@@ -1095,6 +1141,8 @@ class Ui_MainWindow(object):
 
      #Update the Hook Collection View GUI to show the Hook Collections (the top box in the Hook Collection View)
      #You should call this every time you add, delete, or edit a hook
+
+
     def updateCollectionGui(self,manager):
         self.HCV_HCP_TreeView.clear() #Dump everything currently displyed in the ui element! We're rebuilding it
 
@@ -1133,31 +1181,25 @@ class Ui_MainWindow(object):
             rowNum+=1 #makes sure we're placing each new hook collection in a new row
         return
 
-    
-    #Update the Hook Collection View GUI to show the given Hook Collection's hooks (the bottom box in the Hook Collection View)
-"""     def updateCollectionHookList(self,collection):
-        self.HCV_HCP_HP_TreeView.clear() #Dump everything currently displyed in the ui element! We're rebuilding it
+    ##HOOK VIEW UPDATER
+    def updateHookUI(self,manager):
+        self.HV_HP_HookTreeView.clear() #Dump everything currently displyed in the ui element! We're rebuilding it
 
         rowNum = 0 #current item being generated in the list
 
-        for h in collection.getHooks(): #for each hook in the collection, generate a QTreeView item for it
-            item_0 = QtWidgets.QTreeWidgetItem(self.HCV_HCP_HP_TreeView)
+        for h in manager.hooks: #for each hook in the manager, generate a new QTreeView item for it
+            item_0 = QtWidgets.QTreeWidgetItem(self.HV_HP_HookTreeView)
             item_0.setCheckState(0, QtCore.Qt.Unchecked)
-            self.HCV_HCP_HP_TreeView.topLevelItem(rowNum).setText(0, h.getName()) #display hook name
-            self.HCV_HCP_HP_TreeView.topLevelItem(rowNum).setText(1, "Description: " + h.getDesc()) #display hook desc
-            self.HCV_HCP_HP_TreeView.topLevelItem(rowNum).setText(2, str(h.getStatus())) #display hook status
-            self.HCV_HCP_HP_TreeView.topLevelItem(rowNum).setText(3, str(h.getSeqNum())) #display hook sequence num
-            
 
-            rowNum+=1 #makes sure we're placing each new hook in a new row in the gui
-        return """
+            self.HV_HP_HookTreeView.topLevelItem(rowNum).setText(0, h.getName()) #display hook name
+            self.HV_HP_HookTreeView.topLevelItem(rowNum).setText(1, h.getDesc()) #display hook description
+            self.HV_HP_HookTreeView.topLevelItem(rowNum).setText(2, str(h.getAssocNum())) #display the # of associations
 
-    ##END HOOK COLLECTION VIEW UPDATERS
+            rowNum+=1   
 
-    ##FOR HOOK VIEW
-        #TODO: add updaters for the Hook view here
+        return
 
-    ##END HOOK VIEW UPDATERS
+    ##END HOOK VIEW UPDATER
 
     ##FOR LIVE PACKET
         #TODO: add updaters for the Packet view here
@@ -1194,7 +1236,7 @@ def buildSample():
     #create HookCollectionManager called 'manager' and add 'collections' to it.
     #remember that managers also store hooks without assigning them to collections; 
     #we add a copy of the testHook to illustrate this.
-    manager = HookCollectionManager(collections,testHook)
+    manager = HookCollectionManager(collections,[])
 
     return manager
 
@@ -1202,26 +1244,20 @@ def buildSample():
 if __name__ == "__main__":
     #Imports need to be done forthis main method for the classes to work
     import sys
-    from Hook import Hook
-    from HookCollection import HookCollection
-    from HookCollectionManager import HookCollectionManager
-    from PyQt5 import QtCore, QtGui, QtWidgets
-    from CreateEditHookOverlay import Ui_CreateEditHook as CreateEditHook
-    from CreateEditHookCollectionOverlay import Ui_Dialog as CreateEditHookCollection
-    from MessageBasedOverlay import Ui_Dialog as OkDialog
+    from HookFunction.Hook import Hook
+    from HookFunction.HookCollection import HookCollection
+    from HookFunction.HookCollectionManager import HookCollectionManager
 
     app = QtWidgets.QApplication(sys.argv) #create new instance of the application
     MainWindow = QtWidgets.QMainWindow() #Create a new main window
     ui = Ui_MainWindow() #create a ui
     ui.setupUi(MainWindow) #attach the generated ui to the main window 
 
-    manager = buildSample() #generate a fake set of collections to test the display
+    manager = HookCollectionManager([],[]) #generate a fake set of collections to test the display
+    ui.manager = manager
 
-    ui.updateCollectionGui(manager) #update the ui to display the collections
+    #ui.updateCollectionGui(manager) #update the ui to display the collections
     #ui.updateCollectionHookList(manager.getCollections()[0]) #right now, we only display the hooks of the first collection
-    
-    #TODO: add listener to the QTreeView so that the Hook list (the box at the bottom of the Hook Collection View) 
-    #displays the hooks of the clicked collection
 
     MainWindow.show() #display the main window
 
