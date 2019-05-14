@@ -197,15 +197,7 @@ class Ui_MainWindow(object):
         self.horizontalLayout_12.setObjectName("horizontalLayout_12")
         #end header placement
 
-        #Hook Box STRUCTURE (Bottom box in Hook Collection View - the actual hook content is NOT set here.)
-        self.HCV_HCP_HP_TreeView = QtWidgets.QTreeWidget(self.HCV_HookProperties_GroupBox)
-        self.HCV_HCP_HP_TreeView.setObjectName("HCV_HCP_HP_TreeView")
-        self.HCV_HCP_HP_TreeView.headerItem().setTextAlignment(0, QtCore.Qt.AlignLeading|QtCore.Qt.AlignVCenter)
-        self.HCV_HCP_HP_TreeView.headerItem().setTextAlignment(1, QtCore.Qt.AlignLeading|QtCore.Qt.AlignVCenter)
-        self.HCV_HCP_HP_TreeView.headerItem().setTextAlignment(2, QtCore.Qt.AlignLeading|QtCore.Qt.AlignVCenter)
-        self.HCV_HCP_HP_TreeView.headerItem().setTextAlignment(3, QtCore.Qt.AlignLeading|QtCore.Qt.AlignVCenter)
 
-        self.horizontalLayout_12.addWidget(self.HCV_HCP_HP_TreeView)
         self.gridLayout_34.addWidget(self.HCV_HookProperties_GroupBox, 1, 0, 1, 2)
         self.verticalLayout_2.addWidget(self.HCV_HookCollectionProperties_GroupBox)
         self.gridLayout_13.addWidget(self.GroupBox_HCV, 1, 0, 1, 1)
@@ -821,20 +813,21 @@ class Ui_MainWindow(object):
                     manager.addHookCollection(newColl)
                     self.updateCollectionGui(manager)
     
+    #this is for creating new hooks using the Hook view
     def createHookDialog(self,dialogType):
         Dialog = QtWidgets.QDialog()
         hookDialog = dialogType
-        hookDialog.setupUi(Dialog,self.manager)
-        Dialog.exec()
+        hookDialog.setupUi(Dialog,self.manager) #we pass the manager to the dialog
+        Dialog.exec() #execture the dialog
         
-        if hookDialog:
+        if hookDialog: #get the text from the add hook dialog
             name = hookDialog.TextBox_HookName.text()
             desc = hookDialog.TextBox_Description.text()
             path = hookDialog.TextBox_HookPath.text()
 
-            newHook = Hook(name,False,desc,-1,path)
-            manager.addHook(newHook)
-            self.updateHookUI(manager)
+            newHook = Hook(name,False,desc,-1,path) #create hook
+            manager.addHook(newHook) #add it to the system
+            self.updateHookUI(manager) #update the UI to show the newly added hook
 
 
 
@@ -893,16 +886,6 @@ class Ui_MainWindow(object):
         self.HCV_HCP_TreeView.headerItem().setText(3, _translate("MainWindow", "Hook Collection Execution Sequence"))
         __sortingEnabled = self.HCV_HCP_TreeView.isSortingEnabled()
         self.HCV_HCP_TreeView.setSortingEnabled(False)
-        
-        #Hook Box
-        self.HCV_HookProperties_GroupBox.setTitle(_translate("MainWindow", "Hook Properties"))
-        self.HCV_HCP_HP_TreeView.headerItem().setText(0, _translate("MainWindow", "Hook"))
-        self.HCV_HCP_HP_TreeView.headerItem().setText(1, _translate("MainWindow", "Description"))
-        self.HCV_HCP_HP_TreeView.headerItem().setText(2, _translate("MainWindow", "Hook Status"))
-        self.HCV_HCP_HP_TreeView.headerItem().setText(3, _translate("MainWindow", "Hook Execution Sequence"))
-        __sortingEnabled = self.HCV_HCP_HP_TreeView.isSortingEnabled()
-        self.HCV_HCP_HP_TreeView.setSortingEnabled(False)
-
 
         #Packet Stuff
         self.LPV_GroupBox_LivePacketView.setTitle(_translate("MainWindow", "Live Packet View"))
