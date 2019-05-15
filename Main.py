@@ -793,7 +793,7 @@ class Ui_MainWindow(object):
         hookDialog = dialogType
         hookDialog.setupUi(Dialog,manager)
         hookDialog.updateHookBox()
-        Dialog.exec()
+        Dialog.exec_()
 
         if hookDialog:
             if (checkType=="addcoll"):
@@ -818,7 +818,7 @@ class Ui_MainWindow(object):
         Dialog = QtWidgets.QDialog()
         hookDialog = dialogType
         hookDialog.setupUi(Dialog,self.manager) #we pass the manager to the dialog
-        Dialog.exec() #execture the dialog
+        Dialog.exec_() #execture the dialog
         
         if hookDialog: #get the text from the add hook dialog
             name = hookDialog.TextBox_HookName.text()
@@ -838,7 +838,7 @@ class Ui_MainWindow(object):
         Dialog = QtWidgets.QDialog()
         okdialog = OkDialog()
         okdialog.setupUi(Dialog, title, message)
-        Dialog.exec()
+        Dialog.exec_()
 
     def isEnabled(self, combobox, interceptionButton, queueText):
         status = combobox.currentText()
