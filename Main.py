@@ -10,7 +10,8 @@ from PyQt5 import QtCore, QtGui, QtWidgets
 from CreateEditHookOverlay import Ui_CreateEditHook as CreateEditHook
 from CreateEditHookCollectionOverlay import Ui_Dialog as CreateEditHookCollection
 from MessageBasedOverlay import Ui_Dialog as OkDialog
-
+from Proxy import Proxy
+import threading
 
 
 class Ui_MainWindow(object):
@@ -622,6 +623,8 @@ class Ui_MainWindow(object):
         item_1 = QtWidgets.QTreeWidgetItem(item_0)
         item_2 = QtWidgets.QTreeWidgetItem(item_1)
         self.horizontalLayout_4.addWidget(self.PFP_TreeView_Dissected)
+
+
         self.PFP_TabView_PacketArea.addTab(self.PFP_Tab_Dissected, "")
         self.PFP_Tab_Binary = QtWidgets.QWidget()
         self.PFP_Tab_Binary.setObjectName("PFP_Tab_Binary")
@@ -635,6 +638,8 @@ class Ui_MainWindow(object):
         self.PFP_ListView_Binary.addItem(item)
         item = QtWidgets.QListWidgetItem()
         self.PFP_ListView_Binary.addItem(item)
+
+
         self.gridLayout_20.addWidget(self.PFP_ListView_Binary, 0, 0, 1, 1)
         self.PFP_TabView_PacketArea.addTab(self.PFP_Tab_Binary, "")
         self.PFP_Tab_HEX = QtWidgets.QWidget()
@@ -765,7 +770,7 @@ class Ui_MainWindow(object):
 
         self.retranslateUi(MainWindow)
         self.StackView.setCurrentIndex(0)
-        self.LPV_TabView_PacketArea.setCurrentIndex(2)
+        self.LPV_TabView_PacketArea.setCurrentIndex(0)
         self.PFP_TabView_PacketArea.setCurrentIndex(0)
         QtCore.QMetaObject.connectSlotsByName(MainWindow)
 
@@ -847,12 +852,29 @@ class Ui_MainWindow(object):
                               "Proxy behavior has been enabled.\nThe system has backed up the system's proxy settings and will restore to it when the proxy behavior is disabled.")
             interceptionButton.setDisabled(False)
             queueText.setDisabled(False)
+            #Proxy
+            self.proxy = Proxy()
+            self.proxyOn()
+            #self.proxy.intercept()
+            self.t1 = threading.Thread(target=self.proxy.intercept)
+            self.t1.setDaemon(True)
+            self.t1.start()
 
         elif(status == "Disabled"):
             interceptionButton.setDisabled(True)
             queueText.setDisabled(True)
             self.dialogWindow("Proxy Behavior Disabled Notification",
                               "Proxy behavior has been disabled.\nThe system has restored to the previous proxy settings and it will stop appending packet information to the live traffic PCAP file.")
+            self.proxyOff()
+
+    def showHookInfo(self, hookProperties):
+        hookProperties.show()
+
+    def proxyOn(self):
+        self.proxy.turnOn()
+
+    def proxyOff(self):
+        self.proxy.turnOff()
 
     #Build the UI to be contained in the Main window
     def retranslateUi(self, MainWindow):
@@ -1188,31 +1210,31 @@ class Ui_MainWindow(object):
 ###end of UI class###
 
 #test the UI's ability to represent our model by creating a manager with 4 collections in it
-def buildSample():
-     #create a hook called 'testHook'with the name 'Test'. Its sequence is not set automatically.
-    testHook = Hook("Test1",True,"A test hook!",0,"C:/Users/octob/Documents/NTPSProject/Interceptor/testHook.py")
-    testHook1 = Hook("Test2",True,"A test hook!",0,"C:/Users/octob/Documents/NTPSProject/Interceptor/testHook.py")
-    testHook2 = Hook("Test3",True,"A test hook!",0,"C:/Users/octob/Documents/NTPSProject/Interceptor/testHook.py")
-    testHook3 = Hook("Test4",True,"A test hook!",0,"C:/Users/octob/Documents/NTPSProject/Interceptor/testHook.py")
+    def buildSample():
+        #create a hook called 'testHook'with the name 'Test'. Its sequence is not set automatically.
+        testHook = Hook("Test1",True,"A test hook!",0,"C:/Users/octob/Documents/NTPSProject/Interceptor/testHook.py")
+        testHook1 = Hook("Test2",True,"A test hook!",0,"C:/Users/octob/Documents/NTPSProject/Interceptor/testHook.py")
+        testHook2 = Hook("Test3",True,"A test hook!",0,"C:/Users/octob/Documents/NTPSProject/Interceptor/testHook.py")
+        testHook3 = Hook("Test4",True,"A test hook!",0,"C:/Users/octob/Documents/NTPSProject/Interceptor/testHook.py")
 
-    #create hook collections and put the hooks list in it
-    hc = HookCollection("testColl1",0,True,"A test hook collection.",[testHook])
-    hc1 = HookCollection("testColl2",1,True,"A test hook collection.",[testHook1])
-    hc2 = HookCollection("testColl3",2,True,"A test hook collection.",[testHook2])
-    hc3 = HookCollection("testColl4",3,True,"A test hook collection.",[testHook3])
+        #create hook collections and put the hooks list in it
+        hc = HookCollection("testColl1",0,True,"A test hook collection.",[testHook])
+        hc1 = HookCollection("testColl2",1,True,"A test hook collection.",[testHook1])
+        hc2 = HookCollection("testColl3",2,True,"A test hook collection.",[testHook2])
+        hc3 = HookCollection("testColl4",3,True,"A test hook collection.",[testHook3])
 
-    #create a list of HookCollections; right now, there's only one hook collection in it
-    collections = [hc]
-    collections.append(hc1)
-    collections.append(hc2)
-    collections.append(hc3)
+        #create a list of HookCollections; right now, there's only one hook collection in it
+        collections = [hc]
+        collections.append(hc1)
+        collections.append(hc2)
+        collections.append(hc3)
 
-    #create HookCollectionManager called 'manager' and add 'collections' to it.
-    #remember that managers also store hooks without assigning them to collections; 
-    #we add a copy of the testHook to illustrate this.
-    manager = HookCollectionManager(collections,[])
+        #create HookCollectionManager called 'manager' and add 'collections' to it.
+        #remember that managers also store hooks without assigning them to collections; 
+        #we add a copy of the testHook to illustrate this.
+        manager = HookCollectionManager(collections,[])
 
-    return manager
+        return manager
 
 #we actually generate the application we see when we run the python file here
 if __name__ == "__main__":
