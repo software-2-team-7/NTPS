@@ -20,3 +20,6 @@ class rules(object):
 
 	def enableFilter(self):
 		rules.captureFilterStatus = True
+
+	def disableFilter(self):
+		rules.captureFilterStatus = False

@@ -13,11 +13,17 @@ from MessageBasedOverlay import Ui_Dialog as OkDialog
 from Proxy import Proxy
 import threading
 from kamene.all import *
-
+from HookFunction.Hook import Hook
+from HookFunction.HookCollection import HookCollection
+from HookFunction.HookCollectionManager import HookCollectionManager
+from rules import rules
 
 class Ui_MainWindow(object):
 
-    manager = ""
+    manager = HookCollectionManager([],[])
+    rulesP = rules()
+    queue_size = 100
+    captureFilterExpression = ""
 
     def setupUi(self, MainWindow):
         MainWindow.setObjectName("MainWindow")
@@ -352,13 +358,6 @@ class Ui_MainWindow(object):
         self.LPV_TreeView_Dissected = QtWidgets.QTreeWidget(self.LPV_Tab_Dissected)
         self.LPV_TreeView_Dissected.setObjectName("LPV_TreeView_Dissected")
 
-        item_0 = QtWidgets.QTreeWidgetItem(self.LPV_TreeView_Dissected)
-        item_1 = QtWidgets.QTreeWidgetItem(item_0)
-        item_2 = QtWidgets.QTreeWidgetItem(item_1)
-        item_3 = QtWidgets.QTreeWidgetItem(item_2)
-        item_4 = QtWidgets.QTreeWidgetItem(item_3)
-        item_5 = QtWidgets.QTreeWidgetItem(item_4)
-        item_6 = QtWidgets.QTreeWidgetItem(item_5)
 
 
         self.horizontalLayout_2.addWidget(self.LPV_TreeView_Dissected)
@@ -369,12 +368,10 @@ class Ui_MainWindow(object):
         self.gridLayout_22.setObjectName("gridLayout_22")
         self.LPV_ListView_Binary = QtWidgets.QListWidget(self.LPV_Tab_Binary)
         self.LPV_ListView_Binary.setObjectName("LPV_ListView_Binary")
-        item = QtWidgets.QListWidgetItem()
-        self.LPV_ListView_Binary.addItem(item)
-        item = QtWidgets.QListWidgetItem()
-        self.LPV_ListView_Binary.addItem(item)
-        item = QtWidgets.QListWidgetItem()
-        self.LPV_ListView_Binary.addItem(item)
+
+
+
+
         self.gridLayout_22.addWidget(self.LPV_ListView_Binary, 0, 0, 1, 1)
         self.LPV_TabView_PacketArea.addTab(self.LPV_Tab_Binary, "")
         self.LPV_Tab_HEX = QtWidgets.QWidget()
@@ -411,6 +408,9 @@ class Ui_MainWindow(object):
         self.gridLayout_4.addWidget(self.LPV_Label_CaptureFilter, 0, 0, 1, 4)
         self.LPV_Button_Apply = QtWidgets.QPushButton(self.LPV_Frame_CaptureFilter)
         self.LPV_Button_Apply.setObjectName("LPV_Button_Apply")
+
+        self.LPV_Button_Apply.clicked.connect(lambda: self.setCaptureFilter(self.LPV_TextBox_FilterExpression))
+
         self.gridLayout_4.addWidget(self.LPV_Button_Apply, 1, 2, 1, 1)
         self.LPV_Button_Clear = QtWidgets.QPushButton(self.LPV_Frame_CaptureFilter)
         self.LPV_Button_Clear.setObjectName("LPV_Button_Clear")
@@ -572,13 +572,7 @@ class Ui_MainWindow(object):
 
         self.PFP_TreeView_Dissected = QtWidgets.QTreeWidget(self.PFP_Tab_Dissected)
         self.PFP_TreeView_Dissected.setObjectName("PFP_TreeView_Dissected")
-        item_0 = QtWidgets.QTreeWidgetItem(self.PFP_TreeView_Dissected)
-        item_1 = QtWidgets.QTreeWidgetItem(item_0)
-        item_2 = QtWidgets.QTreeWidgetItem(item_1)
-        item_3 = QtWidgets.QTreeWidgetItem(item_2)
-        item_4 = QtWidgets.QTreeWidgetItem(item_3)
-        item_5 = QtWidgets.QTreeWidgetItem(item_4)
-        item_6 = QtWidgets.QTreeWidgetItem(item_5)
+
 
 
         self.PFP_TabView_PacketArea.addTab(self.PFP_Tab_Dissected, "")
@@ -588,8 +582,7 @@ class Ui_MainWindow(object):
         self.gridLayout_20.setObjectName("gridLayout_20")
         self.PFP_ListView_Binary = QtWidgets.QListWidget(self.PFP_Tab_Binary)
         self.PFP_ListView_Binary.setObjectName("PFP_ListView_Binary")
-        item = QtWidgets.QListWidgetItem()
-        self.PFP_ListView_Binary.addItem(item)
+        
 
 
 
@@ -741,6 +734,8 @@ class Ui_MainWindow(object):
         # For Live Packet View
         self.OV_LivePacketButton.clicked.connect(lambda: self.setPage(self.StackView, 3))
         self.LPV_ComboBox_ProxyBehavior.currentTextChanged.connect(lambda: self.isEnabled(self.LPV_ComboBox_ProxyBehavior, self.LPV_ComboBox_InterceptionBehavior, self.LPV_TextBox_QueueSize))
+        self.LPV_ComboBox_InterceptionBehavior.currentTextChanged.connect(lambda: self.enableInterceptor(self.LPV_ComboBox_InterceptionBehavior))
+        self.LPV_TextBox_QueueSize.textChanged.connect(lambda: self.setQueueSize(self.LPV_TextBox_QueueSize))
         
         # For PCAP View
         self.OV_PacketFromPCAPButton.clicked.connect(lambda: self.setPage(self.StackView, 4))
@@ -829,17 +824,35 @@ class Ui_MainWindow(object):
     def proxyOff(self):
         self.proxy.turnOff()
 
+    def setCaptureFilter(self, capture):
+        self.captureFilterExpression = capture.text()
+        print(self.captureFilterExpression)
+
+    def clearFilter(self):
+        self.captureFilterExpression = ""
+
 
     def addPacket(self, packet):
-        pkt = IP(packet.get_payload())
-        if True:
+        newPacker = packet
+        if self.rulesP.captureFilterStatus:
+            print("Passing by hooks!")
             hc = self.manager.getCollections()
-            pkt = hc.executeHookSequence(pkt)
+            newPacker = self.manager.executeCollection(newPacker)
+            newPacker = sniff(filter=self.captureFilterExpression)
+
+        pkt = Ether(newPacker.get_payload())/IP(newPacker.get_payload())
         ptype = pkt.sprintf("%.time% {TCP: TCP}{UDP: UDP}{ICMP:n ICMP} Packet")
+        byt = bytes(pkt)
+        
         item_0 = QtWidgets.QTreeWidgetItem(self.LPV_TreeView_Dissected, [ptype+" : "+pkt.summary()])
-        print(pkt[0][0].summary())
-        print(pkt[0][1].summary())
-        print(pkt.fields.items())
+        hexdump(pkt)
+        #hexP = import_hexcap()
+        
+        #item = QtWidgets.QListWidgetItem()
+        self.LPV_ListView_Binary.addItem(str(byt))
+        self.LPV_ListView_HEX.addItem("Hex")
+        #byteItem = QtWidgets.QListWidgetItem(self.PFP_ListView_Binary, ["Bytes"])
+        
         for i in range(0,len(pkt[0])):
             print(i)
             child = QtWidgets.QTreeWidgetItem(item_0, [str(pkt[0][i].name)])
@@ -847,6 +860,17 @@ class Ui_MainWindow(object):
                 child2 = QtWidgets.QTreeWidgetItem(child, [field+": "+str(value)])
         
         print("HI!")
+
+    def enableInterceptor(self, combobox):
+        status = combobox.currentText()
+        if(status == "Enabled"):
+            self.rulesP.enableFilter()
+        else:
+            self.rulesP.disableFilter()
+
+    def setQueueSize(self, text1):
+        self.queue_size = text1.text()
+        print(self.queue_size)
 
     #Build the UI to be contained in the Main window
     def retranslateUi(self, MainWindow):
@@ -921,17 +945,12 @@ class Ui_MainWindow(object):
         self.LPV_TextBox_Minimum.setPlaceholderText(_translate("MainWindow", "Minimum"))
         self.LPV_Label_PacketArea.setText(_translate("MainWindow", "Packet Area"))
         self.LPV_Button_Clear_2.setText(_translate("MainWindow", "Clear"))
-        self.LPV_TreeView_Dissected.headerItem().setText(0, _translate("MainWindow", "New Column"))
+        self.LPV_Button_Clear.clicked.connect(lambda: self.clearFilter())
+        self.LPV_TreeView_Dissected.headerItem().setText(0, _translate("MainWindow", ""))
         __sortingEnabled = self.LPV_TreeView_Dissected.isSortingEnabled()
         self.LPV_TreeView_Dissected.setSortingEnabled(False)
-        self.LPV_TreeView_Dissected.topLevelItem(0).setText(0, _translate("MainWindow", "New Item"))
-        self.LPV_TreeView_Dissected.topLevelItem(0).child(0).setText(0, _translate("MainWindow", "New Subitem"))
-        self.LPV_TreeView_Dissected.topLevelItem(0).child(0).child(0).setText(0, _translate("MainWindow", "New Subitem"))
-        self.LPV_TreeView_Dissected.topLevelItem(0).child(0).child(0).child(0).setText(0, _translate("MainWindow", "New Subitem"))
-        self.LPV_TreeView_Dissected.topLevelItem(0).child(0).child(0).child(0).child(0).setText(0, _translate("MainWindow", "New Subitem"))
-        self.LPV_TreeView_Dissected.topLevelItem(0).child(0).child(0).child(0).child(0).child(0).setText(0, _translate("MainWindow", "New Subitem"))
+       # self.LPV_TreeView_Dissected.topLevelItem(0).setText(0, _translate("MainWindow", "New Item"))
 
-        self.LPV_TreeView_Dissected.topLevelItem(0).child(0).child(0).child(0).child(0).child(0).child(0).setText(0, _translate("MainWindow", "New Subitem"))
         
         #self.LPV_TreeView_Dissected.topLevelItem(0).setText(0, _translate("MainWindow", "Packet"))
         
@@ -939,24 +958,15 @@ class Ui_MainWindow(object):
         self.LPV_TabView_PacketArea.setTabText(self.LPV_TabView_PacketArea.indexOf(self.LPV_Tab_Dissected), _translate("MainWindow", "Dissected"))
         __sortingEnabled = self.LPV_ListView_Binary.isSortingEnabled()
         self.LPV_ListView_Binary.setSortingEnabled(False)
-        item = self.LPV_ListView_Binary.item(0)
-        item.setText(_translate("MainWindow", " kfas;kfljs fkfjdfksjfkls;fj slf jslsd"))
-        item = self.LPV_ListView_Binary.item(1)
-        item.setText(_translate("MainWindow", "sadfsjklfsjfklsfjds;lkfasd;fskfjsd"))
-        item = self.LPV_ListView_Binary.item(2)
-        item.setText(_translate("MainWindow", "sajsdklfjasdfk;ldsjf;lksdfj ds;l f"))
+
+
         self.LPV_ListView_Binary.setSortingEnabled(__sortingEnabled)
         self.LPV_TabView_PacketArea.setTabText(self.LPV_TabView_PacketArea.indexOf(self.LPV_Tab_Binary), _translate("MainWindow", "Binary"))
         __sortingEnabled = self.LPV_ListView_HEX.isSortingEnabled()
         self.LPV_ListView_HEX.setSortingEnabled(False)
        
         #Fake packet items - these should be deleted after the gui supports the actual model of our system
-        item = self.LPV_ListView_HEX.item(0)
-        item.setText(_translate("MainWindow", "kjasfkl jsdfkldsaj fkldsjfksld jk"))
-        item = self.LPV_ListView_HEX.item(1)
-        item.setText(_translate("MainWindow", "jsdalfjdslksdjfkls djklfj kldjflss"))
-        item = self.LPV_ListView_HEX.item(2)
-        item.setText(_translate("MainWindow", "kjsalfjsadlkfjsd kflsjfklsj lsskl s"))
+
         self.LPV_ListView_HEX.setSortingEnabled(__sortingEnabled)
         self.LPV_TabView_PacketArea.setTabText(self.LPV_TabView_PacketArea.indexOf(self.LPV_Tab_HEX), _translate("MainWindow", "HEX"))
         self.LPV_Label_Filter.setText(_translate("MainWindow", "Filter"))
@@ -993,24 +1003,14 @@ class Ui_MainWindow(object):
         self.PFP_Textbox_Minimum.setPlaceholderText(_translate("MainWindow", "Minimum"))
         self.PFP_Label_PacketArea.setText(_translate("MainWindow", "Packet Area"))
         self.PFP_Button_Clear.setText(_translate("MainWindow", "Clear"))
-        self.PFP_TreeView_Dissected.headerItem().setText(0, _translate("MainWindow", "New Column"))
+        self.PFP_TreeView_Dissected.headerItem().setText(0, _translate("MainWindow", ""))
         __sortingEnabled = self.PFP_TreeView_Dissected.isSortingEnabled()
         self.PFP_TreeView_Dissected.setSortingEnabled(False)
-        self.PFP_TreeView_Dissected.topLevelItem(0).setText(0, _translate("MainWindow", "New Item"))
-        self.PFP_TreeView_Dissected.topLevelItem(0).child(0).setText(0, _translate("MainWindow", "New Subitem"))
-        self.PFP_TreeView_Dissected.topLevelItem(0).child(0).child(0).setText(0, _translate("MainWindow", "New Subitem"))
-        self.PFP_TreeView_Dissected.topLevelItem(0).child(0).child(0).child(0).setText(0, _translate("MainWindow", "New Subitem"))
-        self.PFP_TreeView_Dissected.topLevelItem(0).child(0).child(0).child(0).child(0).setText(0, _translate("MainWindow", "New Subitem"))
-        self.PFP_TreeView_Dissected.topLevelItem(0).child(0).child(0).child(0).child(0).child(0).setText(0, _translate("MainWindow", "New Subitem"))
-
-        self.PFP_TreeView_Dissected.topLevelItem(0).child(0).child(0).child(0).child(0).child(0).child(0).setText(0, _translate("MainWindow", "New Subitem"))
         
 
         __sortingEnabled = self.PFP_ListView_Binary.isSortingEnabled()
         self.PFP_ListView_Binary.setSortingEnabled(False)
-        item = self.PFP_ListView_Binary.item(0)
-        item.setText(_translate("MainWindow", "sdj fkfjakl jskfdj klsfj;aslkdf"))
-        item = self.PFP_ListView_Binary.item(1)
+
         
         
         self.PFP_TabView_PacketArea.setTabText(self.PFP_TabView_PacketArea.indexOf(self.PFP_Tab_Binary), _translate("MainWindow", "Binary"))
@@ -1163,13 +1163,11 @@ class Ui_MainWindow(object):
 
         return self.manager
 
+
 #we actually generate the application we see when we run the python file here
 if __name__ == "__main__":
     #Imports need to be done forthis main method for the classes to work
     import sys
-    from HookFunction.Hook import Hook
-    from HookFunction.HookCollection import HookCollection
-    from HookFunction.HookCollectionManager import HookCollectionManager
 
     app = QtWidgets.QApplication(sys.argv) #create new instance of the application
     MainWindow = QtWidgets.QMainWindow() #Create a new main window
@@ -1183,5 +1181,8 @@ if __name__ == "__main__":
     #ui.updateCollectionHookList(manager.getCollections()[0]) #right now, we only display the hooks of the first collection
 
     MainWindow.show() #display the main window
-
+    import atexit
+    @atexit.register
+    def reset():
+        ui.rulesP.flush()
     sys.exit(app.exec_())
