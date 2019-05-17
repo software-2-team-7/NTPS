@@ -3,14 +3,14 @@ import socket, os
 
 class rules(object):
 	captureFilterStatus = False
-	def __init__(self):
+	def __init__(self): # test
 		print("i am iptables")
 
-	def flush(self):
+	def flush(self): # restore the IPTables
 		print("\niptables flushed")
 		os.system("iptables --flush")
 
-	def set(self):
+	def set(self): # set-up IPTables to recieve from a certain address
 		print("iptables set")
 		s = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
 		s.connect(("8.8.8.8", 80))
