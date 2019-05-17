@@ -23,9 +23,9 @@ class Proxy(object):
 		if False:
 			#testHook = Hook("Test",True,"Neat!",2,"testHook.py")
 			#hooks = []
-			hc = self.manager.getCollections()
+			#hc = self.manager.getCollections()
 			#hc.addHook(testHook)
-			newpkt = hc.executeHookSequence(packet)
+			newpkt = manager.executeHookSequence(packet)
 
 		pkt = IP(packet.get_payload()) #converts the raw packet to a scapy compatible string
 
