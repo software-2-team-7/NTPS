@@ -12,6 +12,7 @@ import threading
 class Proxy(object):
 	proxyStatus = False;
 	nfqueue = NetfilterQueue()
+	manager = ""
 	def __init__(self):
 		print("Proxy")
 		self.proxyStatus = False;
@@ -19,27 +20,31 @@ class Proxy(object):
 		super().__init__()
 
 	def modify(self, packet):
-		if rules.captureFilterStatus:
-			testHook = Hook("Test",True,"Neat!",2,"testHook.py")
-			hooks = []
-			hc = HookCollection("testCollection",0,True,"Test hook coll.",hooks)
-			hc.addHook(testHook)
+		if False:
+			#testHook = Hook("Test",True,"Neat!",2,"testHook.py")
+			#hooks = []
+			hc = self.manager.getCollections()
+			#hc.addHook(testHook)
 			newpkt = hc.executeHookSequence(packet)
 
 		pkt = IP(packet.get_payload()) #converts the raw packet to a scapy compatible string
 
-		pkt.show2()
+		#pkt.show2()
+
+		
 
 		packet.accept() #accept the packet
 
+		
 
-	def intercept(self):
+
+	def intercept(self, function):
 		print("running")
 		#while(self.proxyStatus):
 		#rule.enableFilter() To enable filter
 		#self.nfqueue = NetfilterQueue()
 		self.nfqueue.unbind()
-		self.nfqueue.bind(1, self.modify)
+		self.nfqueue.bind(1, function)
 
 		print ("[*] waiting for data")
 		self.nfqueue.run()
@@ -53,6 +58,9 @@ class Proxy(object):
 	def turnOff(self):	
 		self.rule.flush()
 		self.proxyStatus = False
+
+	def setManager(self, manager):
+		self.manager = manager
 
 		
 
