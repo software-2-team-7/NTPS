@@ -844,7 +844,7 @@ class Ui_MainWindow(object):
             print("Passing by hooks!")
             hc = self.manager.getCollections()
             newPacker = self.manager.executeCollection(newPacker)
-            newPacker = sniff(filter=self.captureFilterExpression)
+            #newPacker = sniff(filter=self.captureFilterExpression)
 
         pkt = Ether(newPacker.get_payload())/IP(newPacker.get_payload())
         self.write(pkt)
