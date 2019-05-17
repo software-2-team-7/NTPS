@@ -24,6 +24,7 @@ class Ui_MainWindow(object):
     rulesP = rules()
     queue_size = 100
     captureFilterExpression = ""
+    count = 0
 
     def setupUi(self, MainWindow):
         MainWindow.setObjectName("MainWindow")
@@ -818,7 +819,12 @@ class Ui_MainWindow(object):
     def showHookInfo(self, hookProperties):
         hookProperties.show()
 
+    def write(self, pkt):
+        wrpcap(self.pcapName, pkt, append=True)
+
     def proxyOn(self):
+        self.count = self.count+1
+        self.pcapName = "live_traffic"+str(self.count)+".pcap"
         self.proxy.turnOn()
 
     def proxyOff(self):
@@ -841,11 +847,12 @@ class Ui_MainWindow(object):
             newPacker = sniff(filter=self.captureFilterExpression)
 
         pkt = Ether(newPacker.get_payload())/IP(newPacker.get_payload())
+        self.write(pkt)
         ptype = pkt.sprintf("%.time% {TCP: TCP}{UDP: UDP}{ICMP:n ICMP} Packet")
         byt = bytes(pkt)
         
         item_0 = QtWidgets.QTreeWidgetItem(self.LPV_TreeView_Dissected, [ptype+" : "+pkt.summary()])
-        hexdump(pkt)
+        #hexdump(pkt)
         #hexP = import_hexcap()
         
         #item = QtWidgets.QListWidgetItem()
@@ -859,7 +866,7 @@ class Ui_MainWindow(object):
             for field, value in pkt.fields.items():
                 child2 = QtWidgets.QTreeWidgetItem(child, [field+": "+str(value)])
         
-        print("HI!")
+        #print("HI!")
 
     def enableInterceptor(self, combobox):
         status = combobox.currentText()
