@@ -12,6 +12,7 @@ from CreateEditHookCollectionOverlay import Ui_Dialog as CreateEditHookCollectio
 from MessageBasedOverlay import Ui_Dialog as OkDialog
 from Proxy import Proxy
 import threading
+from kamene.all import *
 
 
 class Ui_MainWindow(object):
@@ -350,6 +351,7 @@ class Ui_MainWindow(object):
         self.horizontalLayout_2.setObjectName("horizontalLayout_2")
         self.LPV_TreeView_Dissected = QtWidgets.QTreeWidget(self.LPV_Tab_Dissected)
         self.LPV_TreeView_Dissected.setObjectName("LPV_TreeView_Dissected")
+
         item_0 = QtWidgets.QTreeWidgetItem(self.LPV_TreeView_Dissected)
         item_1 = QtWidgets.QTreeWidgetItem(item_0)
         item_2 = QtWidgets.QTreeWidgetItem(item_1)
@@ -357,30 +359,8 @@ class Ui_MainWindow(object):
         item_4 = QtWidgets.QTreeWidgetItem(item_3)
         item_5 = QtWidgets.QTreeWidgetItem(item_4)
         item_6 = QtWidgets.QTreeWidgetItem(item_5)
-        item_0 = QtWidgets.QTreeWidgetItem(self.LPV_TreeView_Dissected)
-        item_1 = QtWidgets.QTreeWidgetItem(item_0)
-        item_2 = QtWidgets.QTreeWidgetItem(item_1)
-        item_3 = QtWidgets.QTreeWidgetItem(item_2)
-        item_4 = QtWidgets.QTreeWidgetItem(item_3)
-        item_5 = QtWidgets.QTreeWidgetItem(item_4)
-        item_0 = QtWidgets.QTreeWidgetItem(self.LPV_TreeView_Dissected)
-        item_1 = QtWidgets.QTreeWidgetItem(item_0)
-        item_2 = QtWidgets.QTreeWidgetItem(item_1)
-        item_3 = QtWidgets.QTreeWidgetItem(item_2)
-        item_4 = QtWidgets.QTreeWidgetItem(item_3)
-        item_0 = QtWidgets.QTreeWidgetItem(self.LPV_TreeView_Dissected)
-        item_1 = QtWidgets.QTreeWidgetItem(item_0)
-        item_2 = QtWidgets.QTreeWidgetItem(item_1)
-        item_0 = QtWidgets.QTreeWidgetItem(self.LPV_TreeView_Dissected)
-        item_1 = QtWidgets.QTreeWidgetItem(item_0)
-        item_2 = QtWidgets.QTreeWidgetItem(item_1)
-        item_3 = QtWidgets.QTreeWidgetItem(item_2)
-        item_4 = QtWidgets.QTreeWidgetItem(item_3)
-        item_5 = QtWidgets.QTreeWidgetItem(item_4)
-        item_6 = QtWidgets.QTreeWidgetItem(item_5)
-        item_0 = QtWidgets.QTreeWidgetItem(self.LPV_TreeView_Dissected)
-        item_1 = QtWidgets.QTreeWidgetItem(item_0)
-        item_2 = QtWidgets.QTreeWidgetItem(item_1)
+
+
         self.horizontalLayout_2.addWidget(self.LPV_TreeView_Dissected)
         self.LPV_TabView_PacketArea.addTab(self.LPV_Tab_Dissected, "")
         self.LPV_Tab_Binary = QtWidgets.QWidget()
@@ -589,6 +569,7 @@ class Ui_MainWindow(object):
         self.PFP_Tab_Dissected.setObjectName("PFP_Tab_Dissected")
         self.horizontalLayout_4 = QtWidgets.QHBoxLayout(self.PFP_Tab_Dissected)
         self.horizontalLayout_4.setObjectName("horizontalLayout_4")
+
         self.PFP_TreeView_Dissected = QtWidgets.QTreeWidget(self.PFP_Tab_Dissected)
         self.PFP_TreeView_Dissected.setObjectName("PFP_TreeView_Dissected")
         item_0 = QtWidgets.QTreeWidgetItem(self.PFP_TreeView_Dissected)
@@ -598,31 +579,6 @@ class Ui_MainWindow(object):
         item_4 = QtWidgets.QTreeWidgetItem(item_3)
         item_5 = QtWidgets.QTreeWidgetItem(item_4)
         item_6 = QtWidgets.QTreeWidgetItem(item_5)
-        item_0 = QtWidgets.QTreeWidgetItem(self.PFP_TreeView_Dissected)
-        item_1 = QtWidgets.QTreeWidgetItem(item_0)
-        item_2 = QtWidgets.QTreeWidgetItem(item_1)
-        item_3 = QtWidgets.QTreeWidgetItem(item_2)
-        item_4 = QtWidgets.QTreeWidgetItem(item_3)
-        item_5 = QtWidgets.QTreeWidgetItem(item_4)
-        item_0 = QtWidgets.QTreeWidgetItem(self.PFP_TreeView_Dissected)
-        item_1 = QtWidgets.QTreeWidgetItem(item_0)
-        item_2 = QtWidgets.QTreeWidgetItem(item_1)
-        item_3 = QtWidgets.QTreeWidgetItem(item_2)
-        item_4 = QtWidgets.QTreeWidgetItem(item_3)
-        item_0 = QtWidgets.QTreeWidgetItem(self.PFP_TreeView_Dissected)
-        item_1 = QtWidgets.QTreeWidgetItem(item_0)
-        item_2 = QtWidgets.QTreeWidgetItem(item_1)
-        item_0 = QtWidgets.QTreeWidgetItem(self.PFP_TreeView_Dissected)
-        item_1 = QtWidgets.QTreeWidgetItem(item_0)
-        item_2 = QtWidgets.QTreeWidgetItem(item_1)
-        item_3 = QtWidgets.QTreeWidgetItem(item_2)
-        item_4 = QtWidgets.QTreeWidgetItem(item_3)
-        item_5 = QtWidgets.QTreeWidgetItem(item_4)
-        item_6 = QtWidgets.QTreeWidgetItem(item_5)
-        item_0 = QtWidgets.QTreeWidgetItem(self.PFP_TreeView_Dissected)
-        item_1 = QtWidgets.QTreeWidgetItem(item_0)
-        item_2 = QtWidgets.QTreeWidgetItem(item_1)
-        self.horizontalLayout_4.addWidget(self.PFP_TreeView_Dissected)
 
 
         self.PFP_TabView_PacketArea.addTab(self.PFP_Tab_Dissected, "")
@@ -634,10 +590,7 @@ class Ui_MainWindow(object):
         self.PFP_ListView_Binary.setObjectName("PFP_ListView_Binary")
         item = QtWidgets.QListWidgetItem()
         self.PFP_ListView_Binary.addItem(item)
-        item = QtWidgets.QListWidgetItem()
-        self.PFP_ListView_Binary.addItem(item)
-        item = QtWidgets.QListWidgetItem()
-        self.PFP_ListView_Binary.addItem(item)
+
 
 
         self.gridLayout_20.addWidget(self.PFP_ListView_Binary, 0, 0, 1, 1)
@@ -856,7 +809,7 @@ class Ui_MainWindow(object):
             self.proxy = Proxy()
             self.proxyOn()
             #self.proxy.intercept()
-            self.t1 = threading.Thread(target=self.proxy.intercept)
+            self.t1 = threading.Thread(target=self.proxy.intercept, args=(self.addPacket,))
             self.t1.setDaemon(True)
             self.t1.start()
 
@@ -875,6 +828,25 @@ class Ui_MainWindow(object):
 
     def proxyOff(self):
         self.proxy.turnOff()
+
+    def addPacket(self, packet):
+        pkt = IP(packet.get_payload())
+        item_0 = QtWidgets.QTreeWidgetItem(self.LPV_TreeView_Dissected, ["Packet"])
+        for layer in pkt:
+            child = QtWidgets.QTreeWidgetItem(item_0, [layer.name])
+            for field in layer:
+                child2 = QtWidgets.QTreeWidgetItem(child, [field.name])
+        
+        #item_1 = QtWidgets.QTreeWidgetItem(item_0)
+        #item_2 = QtWidgets.QTreeWidgetItem(item_1)
+        #item_3 = QtWidgets.QTreeWidgetItem(item_2)
+        #item_4 = QtWidgets.QTreeWidgetItem(item_3)
+        #item_5 = QtWidgets.QTreeWidgetItem(item_4)
+        #item_6 = QtWidgets.QTreeWidgetItem(item_5)
+        
+
+        
+        print("HI!")
 
     #Build the UI to be contained in the Main window
     def retranslateUi(self, MainWindow):
@@ -958,31 +930,11 @@ class Ui_MainWindow(object):
         self.LPV_TreeView_Dissected.topLevelItem(0).child(0).child(0).child(0).setText(0, _translate("MainWindow", "New Subitem"))
         self.LPV_TreeView_Dissected.topLevelItem(0).child(0).child(0).child(0).child(0).setText(0, _translate("MainWindow", "New Subitem"))
         self.LPV_TreeView_Dissected.topLevelItem(0).child(0).child(0).child(0).child(0).child(0).setText(0, _translate("MainWindow", "New Subitem"))
+
         self.LPV_TreeView_Dissected.topLevelItem(0).child(0).child(0).child(0).child(0).child(0).child(0).setText(0, _translate("MainWindow", "New Subitem"))
-        self.LPV_TreeView_Dissected.topLevelItem(1).setText(0, _translate("MainWindow", "New Item"))
-        self.LPV_TreeView_Dissected.topLevelItem(1).child(0).setText(0, _translate("MainWindow", "New Subitem"))
-        self.LPV_TreeView_Dissected.topLevelItem(1).child(0).child(0).setText(0, _translate("MainWindow", "New Subitem"))
-        self.LPV_TreeView_Dissected.topLevelItem(1).child(0).child(0).child(0).setText(0, _translate("MainWindow", "New Subitem"))
-        self.LPV_TreeView_Dissected.topLevelItem(1).child(0).child(0).child(0).child(0).setText(0, _translate("MainWindow", "New Subitem"))
-        self.LPV_TreeView_Dissected.topLevelItem(1).child(0).child(0).child(0).child(0).child(0).setText(0, _translate("MainWindow", "New Subitem"))
-        self.LPV_TreeView_Dissected.topLevelItem(2).setText(0, _translate("MainWindow", "New Item"))
-        self.LPV_TreeView_Dissected.topLevelItem(2).child(0).setText(0, _translate("MainWindow", "New Subitem"))
-        self.LPV_TreeView_Dissected.topLevelItem(2).child(0).child(0).setText(0, _translate("MainWindow", "New Subitem"))
-        self.LPV_TreeView_Dissected.topLevelItem(2).child(0).child(0).child(0).setText(0, _translate("MainWindow", "New Subitem"))
-        self.LPV_TreeView_Dissected.topLevelItem(2).child(0).child(0).child(0).child(0).setText(0, _translate("MainWindow", "New Subitem"))
-        self.LPV_TreeView_Dissected.topLevelItem(3).setText(0, _translate("MainWindow", "New Item"))
-        self.LPV_TreeView_Dissected.topLevelItem(3).child(0).setText(0, _translate("MainWindow", "New Subitem"))
-        self.LPV_TreeView_Dissected.topLevelItem(3).child(0).child(0).setText(0, _translate("MainWindow", "New Subitem"))
-        self.LPV_TreeView_Dissected.topLevelItem(4).setText(0, _translate("MainWindow", "New Item"))
-        self.LPV_TreeView_Dissected.topLevelItem(4).child(0).setText(0, _translate("MainWindow", "New Subitem"))
-        self.LPV_TreeView_Dissected.topLevelItem(4).child(0).child(0).setText(0, _translate("MainWindow", "New Subitem"))
-        self.LPV_TreeView_Dissected.topLevelItem(4).child(0).child(0).child(0).setText(0, _translate("MainWindow", "New Subitem"))
-        self.LPV_TreeView_Dissected.topLevelItem(4).child(0).child(0).child(0).child(0).setText(0, _translate("MainWindow", "New Subitem"))
-        self.LPV_TreeView_Dissected.topLevelItem(4).child(0).child(0).child(0).child(0).child(0).setText(0, _translate("MainWindow", "New Subitem"))
-        self.LPV_TreeView_Dissected.topLevelItem(4).child(0).child(0).child(0).child(0).child(0).child(0).setText(0, _translate("MainWindow", "New Subitem"))
-        self.LPV_TreeView_Dissected.topLevelItem(5).setText(0, _translate("MainWindow", "New Item"))
-        self.LPV_TreeView_Dissected.topLevelItem(5).child(0).setText(0, _translate("MainWindow", "New Subitem"))
-        self.LPV_TreeView_Dissected.topLevelItem(5).child(0).child(0).setText(0, _translate("MainWindow", "New Subitem"))
+        
+        #self.LPV_TreeView_Dissected.topLevelItem(0).setText(0, _translate("MainWindow", "Packet"))
+        
         self.LPV_TreeView_Dissected.setSortingEnabled(__sortingEnabled)
         self.LPV_TabView_PacketArea.setTabText(self.LPV_TabView_PacketArea.indexOf(self.LPV_Tab_Dissected), _translate("MainWindow", "Dissected"))
         __sortingEnabled = self.LPV_ListView_Binary.isSortingEnabled()
@@ -1050,42 +1002,17 @@ class Ui_MainWindow(object):
         self.PFP_TreeView_Dissected.topLevelItem(0).child(0).child(0).child(0).setText(0, _translate("MainWindow", "New Subitem"))
         self.PFP_TreeView_Dissected.topLevelItem(0).child(0).child(0).child(0).child(0).setText(0, _translate("MainWindow", "New Subitem"))
         self.PFP_TreeView_Dissected.topLevelItem(0).child(0).child(0).child(0).child(0).child(0).setText(0, _translate("MainWindow", "New Subitem"))
+
         self.PFP_TreeView_Dissected.topLevelItem(0).child(0).child(0).child(0).child(0).child(0).child(0).setText(0, _translate("MainWindow", "New Subitem"))
-        self.PFP_TreeView_Dissected.topLevelItem(1).setText(0, _translate("MainWindow", "New Item"))
-        self.PFP_TreeView_Dissected.topLevelItem(1).child(0).setText(0, _translate("MainWindow", "New Subitem"))
-        self.PFP_TreeView_Dissected.topLevelItem(1).child(0).child(0).setText(0, _translate("MainWindow", "New Subitem"))
-        self.PFP_TreeView_Dissected.topLevelItem(1).child(0).child(0).child(0).setText(0, _translate("MainWindow", "New Subitem"))
-        self.PFP_TreeView_Dissected.topLevelItem(1).child(0).child(0).child(0).child(0).setText(0, _translate("MainWindow", "New Subitem"))
-        self.PFP_TreeView_Dissected.topLevelItem(1).child(0).child(0).child(0).child(0).child(0).setText(0, _translate("MainWindow", "New Subitem"))
-        self.PFP_TreeView_Dissected.topLevelItem(2).setText(0, _translate("MainWindow", "New Item"))
-        self.PFP_TreeView_Dissected.topLevelItem(2).child(0).setText(0, _translate("MainWindow", "New Subitem"))
-        self.PFP_TreeView_Dissected.topLevelItem(2).child(0).child(0).setText(0, _translate("MainWindow", "New Subitem"))
-        self.PFP_TreeView_Dissected.topLevelItem(2).child(0).child(0).child(0).setText(0, _translate("MainWindow", "New Subitem"))
-        self.PFP_TreeView_Dissected.topLevelItem(2).child(0).child(0).child(0).child(0).setText(0, _translate("MainWindow", "New Subitem"))
-        self.PFP_TreeView_Dissected.topLevelItem(3).setText(0, _translate("MainWindow", "New Item"))
-        self.PFP_TreeView_Dissected.topLevelItem(3).child(0).setText(0, _translate("MainWindow", "New Subitem"))
-        self.PFP_TreeView_Dissected.topLevelItem(3).child(0).child(0).setText(0, _translate("MainWindow", "New Subitem"))
-        self.PFP_TreeView_Dissected.topLevelItem(4).setText(0, _translate("MainWindow", "New Item"))
-        self.PFP_TreeView_Dissected.topLevelItem(4).child(0).setText(0, _translate("MainWindow", "New Subitem"))
-        self.PFP_TreeView_Dissected.topLevelItem(4).child(0).child(0).setText(0, _translate("MainWindow", "New Subitem"))
-        self.PFP_TreeView_Dissected.topLevelItem(4).child(0).child(0).child(0).setText(0, _translate("MainWindow", "New Subitem"))
-        self.PFP_TreeView_Dissected.topLevelItem(4).child(0).child(0).child(0).child(0).setText(0, _translate("MainWindow", "New Subitem"))
-        self.PFP_TreeView_Dissected.topLevelItem(4).child(0).child(0).child(0).child(0).child(0).setText(0, _translate("MainWindow", "New Subitem"))
-        self.PFP_TreeView_Dissected.topLevelItem(4).child(0).child(0).child(0).child(0).child(0).child(0).setText(0, _translate("MainWindow", "New Subitem"))
-        self.PFP_TreeView_Dissected.topLevelItem(5).setText(0, _translate("MainWindow", "New Item"))
-        self.PFP_TreeView_Dissected.topLevelItem(5).child(0).setText(0, _translate("MainWindow", "New Subitem"))
-        self.PFP_TreeView_Dissected.topLevelItem(5).child(0).child(0).setText(0, _translate("MainWindow", "New Subitem"))
-        self.PFP_TreeView_Dissected.setSortingEnabled(__sortingEnabled)
-        self.PFP_TabView_PacketArea.setTabText(self.PFP_TabView_PacketArea.indexOf(self.PFP_Tab_Dissected), _translate("MainWindow", "Dissected"))
+        
+
         __sortingEnabled = self.PFP_ListView_Binary.isSortingEnabled()
         self.PFP_ListView_Binary.setSortingEnabled(False)
         item = self.PFP_ListView_Binary.item(0)
         item.setText(_translate("MainWindow", "sdj fkfjakl jskfdj klsfj;aslkdf"))
         item = self.PFP_ListView_Binary.item(1)
-        item.setText(_translate("MainWindow", "flkjsadfkdsj f;fjasd;lfjs;fasf; "))
-        item = self.PFP_ListView_Binary.item(2)
-        item.setText(_translate("MainWindow", "kjasdfkl jadskf jadsklfjdsskldfa "))
-        self.PFP_ListView_Binary.setSortingEnabled(__sortingEnabled)
+        
+        
         self.PFP_TabView_PacketArea.setTabText(self.PFP_TabView_PacketArea.indexOf(self.PFP_Tab_Binary), _translate("MainWindow", "Binary"))
         __sortingEnabled = self.PFP_ListView_HEX.isSortingEnabled()
         self.PFP_ListView_HEX.setSortingEnabled(False)
@@ -1233,6 +1160,7 @@ class Ui_MainWindow(object):
         #remember that managers also store hooks without assigning them to collections; 
         #we add a copy of the testHook to illustrate this.
         manager = HookCollectionManager(collections,[])
+        self.Proxy.setManager(manager)
 
         return manager
 
