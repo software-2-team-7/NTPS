@@ -1,5 +1,6 @@
 from netfilterqueue import *
 import socket, os
+# used by Proxy
 
 class rules(object):
 	captureFilterStatus = False
