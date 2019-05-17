@@ -829,22 +829,22 @@ class Ui_MainWindow(object):
     def proxyOff(self):
         self.proxy.turnOff()
 
+
     def addPacket(self, packet):
         pkt = IP(packet.get_payload())
-        item_0 = QtWidgets.QTreeWidgetItem(self.LPV_TreeView_Dissected, ["Packet"])
-        for layer in pkt:
-            child = QtWidgets.QTreeWidgetItem(item_0, [layer.name])
-            for field in layer:
-                child2 = QtWidgets.QTreeWidgetItem(child, [field.name])
-        
-        #item_1 = QtWidgets.QTreeWidgetItem(item_0)
-        #item_2 = QtWidgets.QTreeWidgetItem(item_1)
-        #item_3 = QtWidgets.QTreeWidgetItem(item_2)
-        #item_4 = QtWidgets.QTreeWidgetItem(item_3)
-        #item_5 = QtWidgets.QTreeWidgetItem(item_4)
-        #item_6 = QtWidgets.QTreeWidgetItem(item_5)
-        
-
+        if True:
+            hc = self.manager.getCollections()
+            pkt = hc.executeHookSequence(pkt)
+        ptype = pkt.sprintf("%.time% {TCP: TCP}{UDP: UDP}{ICMP:n ICMP} Packet")
+        item_0 = QtWidgets.QTreeWidgetItem(self.LPV_TreeView_Dissected, [ptype+" : "+pkt.summary()])
+        print(pkt[0][0].summary())
+        print(pkt[0][1].summary())
+        print(pkt.fields.items())
+        for i in range(0,len(pkt[0])):
+            print(i)
+            child = QtWidgets.QTreeWidgetItem(item_0, [str(pkt[0][i].name)])
+            for field, value in pkt.fields.items():
+                child2 = QtWidgets.QTreeWidgetItem(child, [field+": "+str(value)])
         
         print("HI!")
 
@@ -1159,10 +1159,9 @@ class Ui_MainWindow(object):
         #create HookCollectionManager called 'manager' and add 'collections' to it.
         #remember that managers also store hooks without assigning them to collections; 
         #we add a copy of the testHook to illustrate this.
-        manager = HookCollectionManager(collections,[])
-        self.Proxy.setManager(manager)
+        self.manager = HookCollectionManager(collections,[])
 
-        return manager
+        return self.manager
 
 #we actually generate the application we see when we run the python file here
 if __name__ == "__main__":
