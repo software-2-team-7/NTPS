@@ -13,6 +13,7 @@ class Proxy(object):
 	proxyStatus = False;
 	nfqueue = NetfilterQueue()
 	manager = ""
+
 	def __init__(self):
 		print("Proxy")
 		self.proxyStatus = False;
@@ -25,7 +26,7 @@ class Proxy(object):
 			#hooks = []
 			#hc = self.manager.getCollections()
 			#hc.addHook(testHook)
-			newpkt = manager.executeHookSequence(packet)
+			newpkt = self.manager.executeCollection(packet)
 
 		pkt = IP(packet.get_payload()) #converts the raw packet to a scapy compatible string
 
